@@ -1,0 +1,17 @@
+{
+    "name": "@snacr/api",
+    "version": "0.0.0",
+    "main": "./index.ts",
+    "types": "./index.ts",
+    "dependencies": {
+        "@trpc/client": "^10.35.0",
+        "@trpc/server": "^10.35.0",
+        "superjson": "^1.13.1",
+        "zod": "^3.21.4"
+    },
+    "devDependencies": {
+        "@snacr/tsconfig": "workspace:^",
+        "@types/node": "20.4.4",
+        "typescript": "5.1.6"
+    }
+}

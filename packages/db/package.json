@@ -1,0 +1,25 @@
+{
+    "name": "@snacr/db",
+    "version": "0.0.0",
+    "main": "./index.ts",
+    "types": "./index.ts",
+    "scripts": {
+        "build": "pnpm db:push",
+        "db:generate": "pnpm with-env prisma generate",
+        "db:push": "pnpm with-env prisma db push",
+        "db:migrate-dev": "pnpm with-env prisma migrate dev",
+        "db:migrate-prod": "pnpm with-env prisma migrate deploy",
+        "with-env": "dotenv -e ../../.env --"
+    },
+    "dependencies": {
+        "@prisma/client": "^5.0.0",
+        "@snacr/env": "workspace:^"
+    },
+    "devDependencies": {
+        "@snacr/tsconfig": "workspace:^",
+        "@types/node": "20.4.4",
+        "dotenv-cli": "^7.2.1",
+        "prisma": "^5.0.0",
+        "typescript": "5.1.6"
+    }
+}

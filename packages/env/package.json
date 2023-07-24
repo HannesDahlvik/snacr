@@ -1,0 +1,18 @@
+{
+    "name": "@snacr/env",
+    "version": "0.0.0",
+    "main": "dist/env.js",
+    "types": "dist/env.d.ts",
+    "scripts": {
+        "build": "tsup env.ts --dts --minify"
+    },
+    "dependencies": {
+        "@t3-oss/env-core": "^0.6.0",
+        "zod": "^3.21.4"
+    },
+    "devDependencies": {
+        "@snacr/tsconfig": "workspace:^",
+        "@types/node": "20.4.4",
+        "tsup": "^7.1.0"
+    }
+}
