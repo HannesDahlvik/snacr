@@ -1,0 +1,17 @@
+{
+    "name": "snacr",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+        "web": "pnpm --filter @snacr/web --",
+        "build": "turbo run build",
+        "bump": "node ./scripts/bump.js"
+    },
+    "devDependencies": {
+        "@trivago/prettier-plugin-sort-imports": "^4.2.0",
+        "eslint": "^8.45.0",
+        "eslint-config-custom": "workspace:^",
+        "prettier": "^2.5.1",
+        "turbo": "1.10.9"
+    }
+}
