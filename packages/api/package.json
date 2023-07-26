@@ -4,14 +4,21 @@
     "main": "./index.ts",
     "types": "./index.ts",
     "dependencies": {
+        "@lucia-auth/adapter-prisma": "^3.0.0",
+        "@snacr/db": "workspace:^",
+        "@snacr/env": "workspace:^",
         "@trpc/client": "^10.35.0",
         "@trpc/server": "^10.35.0",
+        "lucia": "^2.0.0",
+        "next": "13.4.12",
+        "react": "18.2.0",
         "superjson": "^1.13.1",
         "zod": "^3.21.4"
     },
     "devDependencies": {
         "@snacr/tsconfig": "workspace:^",
         "@types/node": "20.4.4",
+        "@types/react": "18.2.15",
         "typescript": "5.1.6"
     }
 }

@@ -3,7 +3,11 @@ import { PropsWithChildren } from 'react'
 import type { Metadata } from 'next'
 import { Lato } from 'next/font/google'
 
+import { getPageSession } from '@snacr/api'
+
 import './globals.css'
+import AuthProvider from '~/providers/AuthProvider'
+import TrpcProvider from '~/providers/TrpcProvider'
 
 const lato = Lato({
     weight: ['300', '400', '700', '900'],
@@ -17,10 +21,18 @@ export const metadata: Metadata = {
     }
 }
 
-export default function RootLayout({ children }: PropsWithChildren) {
+export default async function RootLayout({ children }: PropsWithChildren) {
+    const session = await getPageSession()
+
     return (
         <html lang="en">
-            <body className={lato.className}>{children}</body>
+            <body className={lato.className} style={{ fontWeight: '400' }}>
+                <TrpcProvider>
+                    <AuthProvider session={session}>
+                        <>{children}</>
+                    </AuthProvider>
+                </TrpcProvider>
+            </body>
         </html>
     )
 }
