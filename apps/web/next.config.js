@@ -1,5 +1,3 @@
-const { env } = require('@snacr/env')
-
 /** @type {import('next').NextConfig} */
 const nextConfig = {
     reactStrictMode: false,

@@ -10,7 +10,6 @@
     "dependencies": {
         "@snacr/api": "workspace:^",
         "@snacr/db": "workspace:^",
-        "@snacr/env": "workspace:^",
         "@tanstack/react-query": "^4.32.0",
         "@trpc/client": "^10.35.0",
         "@trpc/react-query": "^10.35.0",

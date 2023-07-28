@@ -32,9 +32,6 @@ importers:
       '@snacr/db':
         specifier: workspace:^
         version: link:../../packages/db
-      '@snacr/env':
-        specifier: workspace:^
-        version: link:../../packages/env
       '@tanstack/react-query':
         specifier: ^4.32.0
         version: 4.32.0(react-dom@18.2.0)(react-native@0.72.3)(react@18.2.0)
@@ -108,9 +105,6 @@ importers:
       '@snacr/db':
         specifier: workspace:^
         version: link:../../packages/db
-      '@snacr/env':
-        specifier: workspace:^
-        version: link:../../packages/env
       '@tanstack/react-query':
         specifier: ^4.32.0
         version: 4.32.0(react-dom@18.2.0)(react-native@0.72.3)(react@18.2.0)
