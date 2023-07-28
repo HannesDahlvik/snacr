@@ -1,5 +1,3 @@
-import { env } from '@snacr/env'
-
 import { PrismaClient } from '@prisma/client'
 
 export * from '@prisma/client'

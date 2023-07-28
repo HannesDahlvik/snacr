@@ -1,7 +1,6 @@
 import { cookies } from 'next/headers'
 
 import { prisma } from '@snacr/db'
-import { env } from '@snacr/env'
 
 import { prisma as prismaAdapter } from '@lucia-auth/adapter-prisma'
 import { lucia } from 'lucia'

@@ -1,7 +1,5 @@
 import { PropsWithChildren, useState } from 'react'
 
-import { env } from '@snacr/env'
-
 import { api } from '../lib/api'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { getFetch, httpBatchLink, loggerLink } from '@trpc/client'
