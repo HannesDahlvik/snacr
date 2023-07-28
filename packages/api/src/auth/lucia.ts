@@ -1,5 +1,3 @@
-import { cache } from 'react'
-
 import { cookies } from 'next/headers'
 
 import { prisma } from '@snacr/db'
@@ -29,10 +27,10 @@ export const auth = lucia({
 
 export type Auth = typeof auth
 
-export const getPageSession = cache(() => {
+export const getPageSession = () => {
     const authRequest = auth.handleRequest({
         request: null,
         cookies
     })
     return authRequest.validate()
-})
+}
