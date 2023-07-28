@@ -9,7 +9,7 @@ import { nextjs } from 'lucia/middleware'
 import 'lucia/polyfill/node'
 
 export const auth = lucia({
-    env: env.NODE_ENV === 'production' ? 'PROD' : 'DEV',
+    env: process.env.NODE_ENV === 'production' ? 'PROD' : 'DEV',
     middleware: nextjs(),
     adapter: prismaAdapter(prisma),
     sessionCookie: {

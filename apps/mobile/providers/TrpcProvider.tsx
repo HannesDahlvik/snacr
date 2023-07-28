@@ -26,7 +26,7 @@ export default function TrpcProvider({ children }: PropsWithChildren) {
             links: [
                 loggerLink({
                     enabled: (opts) =>
-                        env.NODE_ENV === 'development' ||
+                        process.env.NODE_ENV === 'development' ||
                         (opts.direction === 'down' && opts.result instanceof Error)
                 }),
                 httpBatchLink({
