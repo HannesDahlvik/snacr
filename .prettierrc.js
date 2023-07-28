@@ -11,6 +11,8 @@ module.exports = {
     importOrder: [
         '^(react/(.*)$)|^(react$)',
         '^(next/(.*)$)|^(next$)',
+        '^(react-native/(.*)$)|^(react-native$)',
+        '^(expo/(.*)$)|^(expo$)',
         '<THIRD_PARTY_MODULES>',
         '^@snacr/(.*)$',
         '',

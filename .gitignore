@@ -8,6 +8,7 @@ build
 dist
 
 # misc
+.expo
 next-env.d.ts
 
 # debug
