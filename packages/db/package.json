@@ -7,8 +7,8 @@
         "build": "pnpm db:push",
         "db:generate": "pnpm with-env prisma generate",
         "db:push": "pnpm with-env prisma db push",
-        "db:migrate-dev": "pnpm with-env prisma migrate dev",
-        "db:migrate-prod": "pnpm with-env prisma migrate deploy",
+        "db:migrate::dev": "pnpm with-env prisma migrate dev",
+        "db:migrate::prod": "pnpm with-env prisma migrate deploy",
         "with-env": "dotenv -e ../../.env --"
     },
     "dependencies": {
