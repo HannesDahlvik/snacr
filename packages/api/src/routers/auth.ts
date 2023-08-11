@@ -111,7 +111,10 @@ export const authRouter = router({
                 authRequest.setSession(session)
                 return session.user
             } else if (ctx.device === 'mobile') {
-                return session.sessionId
+                return {
+                    sessionId: session.sessionId,
+                    user: session.user
+                }
             }
         }),
     verify: procedure.mutation(async ({ ctx }) => {

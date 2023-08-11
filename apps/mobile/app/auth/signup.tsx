@@ -2,6 +2,10 @@ import { Text, View, TextInput, Button } from 'react-native'
 
 import { useZodForm } from '../../hooks/useZodForm'
 import { api } from '../../lib/api'
+import { save } from '../../lib/store'
+import { useAuth } from '../../providers/AuthProvider'
+import { store } from '../../stores'
+import { useHookstate } from '@hookstate/core'
 import { Controller } from 'react-hook-form'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { z } from 'zod'
@@ -15,6 +19,9 @@ type SignupSchema = z.infer<typeof signupSchema>
 
 export default function SignupPage() {
     const signupMutation = api.auth.signup.useMutation()
+
+    const { setSessionId, setUser } = useAuth()
+    const authSessionId = useHookstate(store.auth.sessionId)
 
     const {
         control,
@@ -38,7 +45,14 @@ export default function SignupPage() {
             },
             {
                 onError: (err) => console.error(err),
-                onSuccess: (res) => console.log(res)
+                onSuccess: async (res) => {
+                    if (setSessionId && setUser) {
+                        setSessionId(res.sessionId)
+                        setUser(res.user)
+                    }
+                    await save('sessionId', res.sessionId)
+                    authSessionId.set(res)
+                }
             }
         )
     }

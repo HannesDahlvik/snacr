@@ -43,7 +43,7 @@ export default function LoginPage() {
                         setSessionId(res.sessionId)
                         setUser(res.user)
                     }
-                    await save('sessionId', res)
+                    await save('sessionId', res.sessionId)
                     authSessionId.set(res)
                 }
             }
