@@ -1,28 +1,34 @@
 import { Button, Text, View } from 'react-native'
 
-import { api } from '../lib/api'
+import { useAuth } from '../providers/AuthProvider'
+import { useRouter } from 'expo-router'
+import { SafeAreaView } from 'react-native-safe-area-context'
 
 export default function IndexPage() {
-    const test = api.test.useQuery(undefined, {
-        enabled: false
-    })
+    const router = useRouter()
+    const { user } = useAuth()
 
-    if (test.isError)
-        return (
-            <View className="flex-1 flex-col items-center justify-center gap-3 bg-white">
-                <Text>{test.error.message}</Text>
-            </View>
-        )
+    if (user) router.replace('/authed')
 
     return (
-        <View className="flex-1 flex-col items-center justify-center gap-3 bg-white">
-            <Button
-                title="Fetch"
-                disabled={test.status === 'success'}
-                onPress={() => test.refetch()}
-            />
+        <SafeAreaView className="flex flex-col items-center justify-center pt-60">
+            <Text className="mb-8 text-5xl">Snacr</Text>
 
-            <Text>Test: {test.data}</Text>
-        </View>
+            <Text className="mb-4">Auth state: {user ? 'Authed' : 'Not Authed'}</Text>
+
+            <View className="w-1/2">
+                <View className="mb-2">
+                    <Button title="Login" onPress={() => router.push('/auth/login')} />
+                </View>
+
+                <View className="mb-2">
+                    <Button title="Signup" onPress={() => router.push('/auth/signup')} />
+                </View>
+
+                <View className="mb-2">
+                    <Button title="Authed page" onPress={() => router.push('/authed')} />
+                </View>
+            </View>
+        </SafeAreaView>
     )
 }

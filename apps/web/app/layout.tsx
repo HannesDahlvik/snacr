@@ -3,7 +3,7 @@ import { PropsWithChildren } from 'react'
 import type { Metadata } from 'next'
 import { Lato } from 'next/font/google'
 
-import { getPageSession } from '@snacr/api'
+import { getServerSession } from '@snacr/api'
 
 import './globals.css'
 import AuthProvider from '~/providers/AuthProvider'
@@ -22,14 +22,16 @@ export const metadata: Metadata = {
 }
 
 export default async function RootLayout({ children }: PropsWithChildren) {
-    const session = await getPageSession()
+    const session = await getServerSession()
 
     return (
         <html lang="en">
             <body className={lato.className} style={{ fontWeight: '400' }}>
                 <TrpcProvider>
                     <AuthProvider session={session}>
-                        <>{children}</>
+                        <div className="flex flex-col h-screen">
+                            <>{children}</>
+                        </div>
                     </AuthProvider>
                 </TrpcProvider>
             </body>

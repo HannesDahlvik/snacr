@@ -1,11 +1,22 @@
-import Auth from '../components/Auth'
+import Link from 'next/link'
 
-export default function Home() {
+import Logout from '~/components/auth/Logout'
+import { caller } from '~/lib/caller'
+
+export default async function Home() {
+    const test = await caller.test()
+
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-1 flex-col justify-center items-center">
             <h1>Snacr</h1>
 
-            <Auth />
+            <Link href="/login">Login</Link>
+            <Link href="/signup">Signup</Link>
+            <Logout />
+
+            <p>Test: {test}</p>
+
+            <Link href="/authed">Authed Page</Link>
         </div>
     )
 }

@@ -34,23 +34,33 @@ export const authRouter = router({
                         message: err.message
                     })
                 })
+
             const authRequest = auth.handleRequest({
                 request: ctx.req as NextRequest,
                 cookies
             })
-            authRequest.setSession(session)
 
-            return session.user
+            if (ctx.device === 'web') {
+                authRequest.setSession(session)
+                return session.user
+            } else if (ctx.device === 'mobile') {
+                return {
+                    sessionId: session.sessionId,
+                    user: session.user
+                }
+            }
         }),
     logout: authedProcedure.mutation(async ({ ctx }) => {
-        const authRequest = auth.handleRequest({
-            request: ctx.req as NextRequest,
-            cookies
-        })
         await auth.invalidateSession(ctx.session.sessionId)
-        authRequest.setSession(null)
+        if (ctx.device === 'web') {
+            const authRequest = auth.handleRequest({
+                request: ctx.req as NextRequest,
+                cookies
+            })
+            authRequest.setSession(null)
 
-        return null
+            return null
+        } else return null
     }),
     signup: procedure
         .input(
@@ -96,8 +106,29 @@ export const authRouter = router({
                 request: ctx.req as NextRequest,
                 cookies
             })
-            authRequest.setSession(session)
 
-            return user
+            if (ctx.device === 'web') {
+                authRequest.setSession(session)
+                return session.user
+            } else if (ctx.device === 'mobile') {
+                return session.sessionId
+            }
+        }),
+    verify: procedure.mutation(async ({ ctx }) => {
+        const authRequest = auth.handleRequest({
+            request: ctx.req as NextRequest,
+            cookies
         })
+        const session = await authRequest.validateBearerToken()
+
+        if (!session) return null
+
+        const { sessionId, user } = session
+
+        return {
+            session,
+            sessionId,
+            user
+        }
+    })
 })

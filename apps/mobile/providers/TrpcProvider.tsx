@@ -1,8 +1,9 @@
 import { PropsWithChildren, useState } from 'react'
 
 import { api } from '../lib/api'
+import { store } from '../stores'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { getFetch, httpBatchLink, loggerLink } from '@trpc/client'
+import { httpBatchLink, loggerLink } from '@trpc/client'
 import Constants from 'expo-constants'
 import superjson from 'superjson'
 
@@ -29,12 +30,12 @@ export default function TrpcProvider({ children }: PropsWithChildren) {
                 }),
                 httpBatchLink({
                     url: `${getBaseUrl()}/api/trpc`,
-                    fetch: async (input, init?) => {
-                        const fetch = getFetch()
-                        return fetch(input, {
-                            ...init,
-                            credentials: 'include'
-                        })
+                    headers() {
+                        const sessionId = store.auth.sessionId.get()
+                        return {
+                            Authorization: `Bearer ${sessionId}`,
+                            device: 'mobile'
+                        }
                     }
                 })
             ]

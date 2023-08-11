@@ -26,6 +26,11 @@ export default function TrpcProvider({ children }: PropsWithChildren) {
                 }),
                 httpBatchLink({
                     url: `${getBaseUrl()}/api/trpc`,
+                    headers() {
+                        return {
+                            Device: 'web'
+                        }
+                    },
                     fetch: async (input, init?) => {
                         const fetch = getFetch()
                         return fetch(input, {

@@ -1,9 +1,10 @@
 import { authRouter } from './routers/auth'
-import { procedure, router } from './trpc'
+import { authedProcedure, procedure, router } from './trpc'
 
 export const snacrRouter = router({
     auth: authRouter,
-    test: procedure.query(() => 'test procedure')
+    test: procedure.query(() => 'test procedure'),
+    authedTest: authedProcedure.query(() => 'authed test procedure')
 })
 
 export type SnacrRouter = typeof snacrRouter
