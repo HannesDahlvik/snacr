@@ -6,6 +6,7 @@ import { Lato } from 'next/font/google'
 import { getServerSession } from '@snacr/api'
 
 import './globals.css'
+import { ThemeProvider } from '~/components/ui'
 import AuthProvider from '~/providers/AuthProvider'
 import TrpcProvider from '~/providers/TrpcProvider'
 
@@ -25,15 +26,17 @@ export default async function RootLayout({ children }: PropsWithChildren) {
     const session = await getServerSession()
 
     return (
-        <html lang="en">
+        <html lang="en" suppressHydrationWarning>
             <body className={lato.className} style={{ fontWeight: '400' }}>
-                <TrpcProvider>
-                    <AuthProvider session={session}>
-                        <div className="flex flex-col h-screen">
-                            <>{children}</>
-                        </div>
-                    </AuthProvider>
-                </TrpcProvider>
+                <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+                    <TrpcProvider>
+                        <AuthProvider session={session}>
+                            <div className="flex flex-col h-screen">
+                                <>{children}</>
+                            </div>
+                        </AuthProvider>
+                    </TrpcProvider>
+                </ThemeProvider>
             </body>
         </html>
     )

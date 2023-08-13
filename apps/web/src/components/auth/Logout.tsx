@@ -1,13 +1,10 @@
 'use client'
 
+import { Button } from '~/components/ui'
 import { useAuth } from '~/providers/AuthProvider'
 
 export default function Logout() {
     const { logout } = useAuth()
 
-    return (
-        <div className="mb-4">
-            <button onClick={logout}>Logout</button>
-        </div>
-    )
+    return <Button onClick={logout}>Logout</Button>
 }
