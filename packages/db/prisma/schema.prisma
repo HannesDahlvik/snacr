@@ -1,7 +1,8 @@
 generator kysely {
-  provider = "prisma-kysely"
-  output   = "../src"
-  fileName = "schema.ts"
+  provider     = "prisma-kysely"
+  output       = "../src"
+  fileName     = "schema.ts"
+  enumFileName = "enums.ts"
 }
 
 datasource db {
