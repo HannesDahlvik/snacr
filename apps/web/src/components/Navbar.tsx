@@ -42,7 +42,7 @@ export default function Navbar() {
     }
 
     return (
-        <div className="flex items-center h-20 w-full bg-background border-b">
+        <nav className="sticky top-0 flex items-center h-20 w-full bg-background/90 border-b backdrop-blur">
             <div className="grid grid-cols-3 items-center w-full px-10">
                 <div>
                     <Link href="/" className="text-foreground">
@@ -132,6 +132,6 @@ export default function Navbar() {
                     </IconContext.Provider>
                 </div>
             </div>
-        </div>
+        </nav>
     )
 }
