@@ -2,6 +2,7 @@
 
 import { useRouter } from 'next/navigation'
 
+import { Button, Input } from '../ui'
 import { z } from 'zod'
 import { useZodForm } from '~/hooks/useZodForm'
 import { api } from '~/lib/api'
@@ -34,6 +35,7 @@ export default function AuthLoginForm() {
             {
                 onError: (err) => console.error(err),
                 onSuccess: () => {
+                    router.replace('/')
                     router.refresh()
                 }
             }
@@ -42,7 +44,7 @@ export default function AuthLoginForm() {
 
     return (
         <form className="flex flex-col" onSubmit={handleSubmit(handleLogin)}>
-            <input
+            <Input
                 type="email"
                 className="border rounded mb-2 px-2"
                 placeholder="name@email.com"
@@ -50,7 +52,7 @@ export default function AuthLoginForm() {
                 {...register('email')}
             />
 
-            <input
+            <Input
                 type="password"
                 className="border rounded mb-2 px-2"
                 placeholder="******"
@@ -58,7 +60,7 @@ export default function AuthLoginForm() {
                 {...register('password')}
             />
 
-            <button type="submit">Login</button>
+            <Button type="submit">Login</Button>
         </form>
     )
 }

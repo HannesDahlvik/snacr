@@ -15,6 +15,7 @@ import { User } from '@snacr/db'
 import { api } from '../lib/api'
 import { remove } from '../lib/store'
 import { store } from '../stores'
+import { useHookstate } from '@hookstate/core'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 interface AuthContextType {
@@ -29,33 +30,36 @@ export const AuthContext = createContext<AuthContextType | null>(null)
 export default function AuthProvider({ children }: PropsWithChildren) {
     const authVerify = api.auth.verify.useMutation()
 
+    const authSessionId = useHookstate(store.auth.sessionId)
+
     const [sessionId, setSessionId] = useState<string | null>(null)
     const [user, setUser] = useState<User | null>(null)
 
     useEffect(() => {
-        authVerify.mutate(undefined, {
-            onError: (err) => {
-                console.error(err)
-            },
-            onSuccess: (data) => {
-                if (!data) {
-                    setSessionId(null)
-                    setUser(null)
-                    store.auth.set({
-                        sessionId: null,
-                        user: null
-                    })
-                    return
-                }
+        if (authSessionId.get())
+            authVerify.mutate(undefined, {
+                onError: (err) => {
+                    console.error(err)
+                },
+                onSuccess: (data) => {
+                    if (!data) {
+                        setSessionId(null)
+                        setUser(null)
+                        store.auth.set({
+                            sessionId: null,
+                            user: null
+                        })
+                        return
+                    }
 
-                setSessionId(data.sessionId)
-                setUser(data.user)
-                store.auth.set({
-                    sessionId: data.sessionId,
-                    user: data.user
-                })
-            }
-        })
+                    setSessionId(data.sessionId)
+                    setUser(data.user)
+                    store.auth.set({
+                        sessionId: data.sessionId,
+                        user: data.user
+                    })
+                }
+            })
     }, [])
 
     if (authVerify.isError)
@@ -81,7 +85,7 @@ export default function AuthProvider({ children }: PropsWithChildren) {
                 setUser
             }}
         >
-            <>{children}</>
+            {children}
         </AuthContext.Provider>
     )
 }

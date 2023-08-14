@@ -1,8 +1,8 @@
 import { cookies } from 'next/headers'
 
-import { prisma } from '@snacr/db'
+import { pool } from '@snacr/db'
 
-import { prisma as prismaAdapter } from '@lucia-auth/adapter-prisma'
+import { pg } from '@lucia-auth/adapter-postgresql'
 import { lucia } from 'lucia'
 import { nextjs } from 'lucia/middleware'
 import 'lucia/polyfill/node'
@@ -10,7 +10,11 @@ import 'lucia/polyfill/node'
 export const auth = lucia({
     env: process.env.NODE_ENV === 'production' ? 'PROD' : 'DEV',
     middleware: nextjs(),
-    adapter: prismaAdapter(prisma),
+    adapter: pg(pool, {
+        key: 'Key',
+        session: 'Session',
+        user: 'User'
+    }),
     sessionCookie: {
         expires: false
     },
