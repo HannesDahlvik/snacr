@@ -4,17 +4,21 @@ import { Fragment } from 'react'
 
 import Link from 'next/link'
 
-import { Avatar, Button, Input } from './ui'
 import {
+    Avatar,
+    Button,
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
     DropdownMenuLabel,
     DropdownMenuSeparator,
-    DropdownMenuTrigger
-} from './ui/dropdown-menu'
-import { CaretDown, Gear, IconContext, SignOut, UserCircle } from '@phosphor-icons/react'
+    DropdownMenuTrigger,
+    Input,
+    Separator
+} from './ui'
+import { CaretDown, Gear, IconContext, Moon, SignOut, Sun, UserCircle } from '@phosphor-icons/react'
 import { AvatarFallback } from '@radix-ui/react-avatar'
+import { useTheme } from 'next-themes'
 import { z } from 'zod'
 import { useZodForm } from '~/hooks/useZodForm'
 import { getInitials } from '~/lib/getInitials'
@@ -27,6 +31,7 @@ type SearchSchema = z.infer<typeof searchSchema>
 
 export default function Navbar() {
     const { user, logout } = useAuth()
+    const { theme, setTheme } = useTheme()
 
     const { handleSubmit, register, reset } = useZodForm({
         schema: searchSchema
@@ -54,36 +59,47 @@ export default function Navbar() {
                     </form>
                 </div>
 
-                <div className="flex justify-end gap-2">
-                    {!user ? (
-                        <Fragment>
-                            <Link href="/login">
-                                <Button variant="outline">Login</Button>
-                            </Link>
-                            <Link href="/signup">
-                                <Button>Signup</Button>
-                            </Link>
-                        </Fragment>
-                    ) : (
-                        <div className="flex items-center gap-2 cursor-pointer">
-                            <DropdownMenu>
-                                <DropdownMenuTrigger className="flex items-center gap-1 outline-none">
-                                    <Avatar className="border">
-                                        <AvatarFallback>
-                                            {getInitials(user.username)}
-                                        </AvatarFallback>
-                                    </Avatar>
+                <div className="flex justify-end items-center gap-2">
+                    <IconContext.Provider
+                        value={{
+                            size: 20,
+                            weight: 'fill'
+                        }}
+                    >
+                        <Button
+                            size="icon"
+                            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                        >
+                            {theme === 'dark' ? <Sun /> : <Moon />}
+                        </Button>
 
-                                    <CaretDown />
-                                </DropdownMenuTrigger>
+                        <div className="h-10">
+                            <Separator className="mx-2" orientation="vertical" />
+                        </div>
 
-                                <DropdownMenuContent className="w-40">
-                                    <IconContext.Provider
-                                        value={{
-                                            size: 20,
-                                            weight: 'fill'
-                                        }}
-                                    >
+                        {!user ? (
+                            <Fragment>
+                                <Link href="/login">
+                                    <Button variant="outline">Login</Button>
+                                </Link>
+                                <Link href="/signup">
+                                    <Button>Signup</Button>
+                                </Link>
+                            </Fragment>
+                        ) : (
+                            <div className="flex items-center gap-2 cursor-pointer">
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger className="flex items-center gap-1 outline-none">
+                                        <Avatar className="border">
+                                            <AvatarFallback>
+                                                {getInitials(user.username)}
+                                            </AvatarFallback>
+                                        </Avatar>
+
+                                        <CaretDown />
+                                    </DropdownMenuTrigger>
+
+                                    <DropdownMenuContent className="w-40">
                                         <DropdownMenuLabel>My Account</DropdownMenuLabel>
                                         <DropdownMenuSeparator />
                                         <DropdownMenuItem>
@@ -109,11 +125,11 @@ export default function Navbar() {
                                             <SignOut />
                                             Logout
                                         </DropdownMenuItem>
-                                    </IconContext.Provider>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                        </div>
-                    )}
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                            </div>
+                        )}
+                    </IconContext.Provider>
                 </div>
             </div>
         </div>

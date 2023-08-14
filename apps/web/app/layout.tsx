@@ -29,7 +29,12 @@ export default async function RootLayout({ children }: PropsWithChildren) {
     return (
         <html lang="en" suppressHydrationWarning>
             <body className={lato.className} style={{ fontWeight: '400' }}>
-                <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="dark"
+                    themes={['light', 'dark']}
+                    enableSystem
+                >
                     <TrpcProvider>
                         <AuthProvider session={session}>
                             <div className="flex flex-col min-h-screen">
