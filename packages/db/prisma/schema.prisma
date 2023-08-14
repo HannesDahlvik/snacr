@@ -50,10 +50,10 @@ model Key {
 }
 
 model Place {
-  id          String   @id @default(cuid())
+  id          String   @id @default(dbgenerated("cuid()"))
   name        String   @unique
-  description String
-  createdAt   DateTime @default(now())
+  description String?
+  createdAt   DateTime @default(dbgenerated("now()"))
 
   posts       Post[]
   subscribers Subscription[]
@@ -81,12 +81,11 @@ enum PostType {
 }
 
 model Post {
-  id        String   @id @default(cuid())
+  id        String   @id @default(dbgenerated("cuid()"))
   type      PostType
   title     String
   body      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(dbgenerated("now()"))
 
   authorId String
   placeId  String
@@ -99,10 +98,9 @@ model Post {
 }
 
 model Comment {
-  id        String   @id @default(cuid())
+  id        String   @id @default(dbgenerated("cuid()"))
   text      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt DateTime @default(dbgenerated("now()"))
 
   authorId  String
   postId    String

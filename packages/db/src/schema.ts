@@ -7,10 +7,9 @@ export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
 export type Timestamp = ColumnType<Date, Date | string, Date | string>
 
 export type Comment = {
-    id: string
+    id: Generated<string>
     text: string
     createdAt: Generated<Timestamp>
-    updatedAt: Timestamp
     authorId: string
     postId: string
     commentId: string | null
@@ -27,19 +26,18 @@ export type Key = {
     user_id: string
 }
 export type Place = {
-    id: string
+    id: Generated<string>
     name: string
-    description: string
+    description: string | null
     createdAt: Generated<Timestamp>
     creatorId: string
 }
 export type Post = {
-    id: string
+    id: Generated<string>
     type: PostType
     title: string
     body: string
     createdAt: Generated<Timestamp>
-    updatedAt: Timestamp
     authorId: string
     placeId: string
 }
