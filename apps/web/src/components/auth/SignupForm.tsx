@@ -21,6 +21,7 @@ export default function AuthSignupForm() {
 
     const {
         handleSubmit,
+        register,
         formState: { errors }
     } = useZodForm({
         schema: signupSchema
@@ -50,6 +51,7 @@ export default function AuthSignupForm() {
                 className="border rounded mb-2 px-2"
                 placeholder="Jon Doe"
                 required
+                {...register('username')}
             />
 
             <Input
@@ -57,6 +59,7 @@ export default function AuthSignupForm() {
                 className="border rounded mb-2 px-2"
                 placeholder="name@email.com"
                 required
+                {...register('email')}
             />
 
             <Input
@@ -64,6 +67,7 @@ export default function AuthSignupForm() {
                 className="border rounded mb-2 px-2"
                 placeholder="******"
                 required
+                {...register('password')}
             />
 
             <Button type="submit">Signup</Button>
