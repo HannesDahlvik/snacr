@@ -1,3 +1,5 @@
+import Link from 'next/link'
+
 import AuthLoginForm from '~/components/auth/LoginForm'
 
 export default function AuthLoginPage() {
@@ -6,6 +8,13 @@ export default function AuthLoginPage() {
             <h2 className="mb-4">Login</h2>
 
             <AuthLoginForm />
+
+            <p className="mt-4">
+                Dont have an account?{' '}
+                <Link className="text-blue-500" href="/signup">
+                    Signup
+                </Link>
+            </p>
         </div>
     )
 }

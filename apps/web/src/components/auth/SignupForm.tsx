@@ -45,7 +45,7 @@ export default function AuthSignupForm() {
     }
 
     return (
-        <form className="flex flex-col" onSubmit={handleSubmit(handleSignup)}>
+        <form className="flex flex-col w-full" onSubmit={handleSubmit(handleSignup)}>
             <Input
                 type="text"
                 className="border rounded mb-2 px-2"

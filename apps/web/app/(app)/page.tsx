@@ -18,7 +18,7 @@ export default async function Home() {
                 {posts.map((post) => (
                     <Link
                         className="w-full"
-                        href={`/place/${post.place?.name}/post/${post.id}`}
+                        href={`/p/${post.place?.name}/post/${post.id}`}
                         key={post.id}
                     >
                         <PostCard post={post} />

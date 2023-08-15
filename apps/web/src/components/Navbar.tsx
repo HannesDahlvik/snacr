@@ -16,7 +16,16 @@ import {
     Input,
     Separator
 } from './ui'
-import { CaretDown, Gear, IconContext, Moon, SignOut, Sun, UserCircle } from '@phosphor-icons/react'
+import {
+    CaretDown,
+    Gear,
+    IconContext,
+    Moon,
+    Plus,
+    SignOut,
+    Sun,
+    UserCircle
+} from '@phosphor-icons/react'
 import { AvatarFallback } from '@radix-ui/react-avatar'
 import { useTheme } from 'next-themes'
 import { z } from 'zod'
@@ -42,15 +51,15 @@ export default function Navbar() {
     }
 
     return (
-        <nav className="navbar-area sticky top-0 flex items-center h-20 w-full bg-background/50 border-b backdrop-blur z-50">
+        <nav className="navbar-area sticky top-0 flex items-center h-20 w-full bg-secondary/75 border-b backdrop-blur z-50">
             <div className="relative flex justify-between items-center w-full px-10">
-                <div className="w-60">
+                <div>
                     <Link href="/" className="text-foreground">
                         Snacr
                     </Link>
                 </div>
 
-                <div className="flex justify-center items-center w-center">
+                <div className="absolute left-1/2 right-1/2 -translate-x-1/2 flex justify-center items-center w-center">
                     <form
                         className="flex items-center gap-2 w-full"
                         onSubmit={handleSubmit(handleSearch)}
@@ -59,7 +68,7 @@ export default function Navbar() {
                     </form>
                 </div>
 
-                <div className="flex justify-end items-center gap-2 w-60">
+                <div className="flex justify-end items-center gap-2">
                     <IconContext.Provider
                         value={{
                             size: 20,

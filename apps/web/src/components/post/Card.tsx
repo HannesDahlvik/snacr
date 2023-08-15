@@ -12,8 +12,8 @@ export default function PostCard({ post }: Props) {
         <Card className="hover:border-primary/50">
             <CardHeader>
                 <div>
-                    <Link href={`/place/${post.place.name}`} className="hover:underline">
-                        {post.place.name}
+                    <Link href={`/p/${post.place.name}`} className="hover:underline">
+                        p/{post.place.name}
                     </Link>
                 </div>
                 <CardTitle>{post.title}</CardTitle>

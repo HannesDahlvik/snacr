@@ -43,7 +43,7 @@ export default function AuthLoginForm() {
     }
 
     return (
-        <form className="flex flex-col" onSubmit={handleSubmit(handleLogin)}>
+        <form className="flex flex-col w-full" onSubmit={handleSubmit(handleLogin)}>
             <Input
                 type="email"
                 className="border rounded mb-2 px-2"
