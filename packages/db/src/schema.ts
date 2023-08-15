@@ -36,7 +36,7 @@ export type Post = {
     id: string
     type: PostType
     title: string
-    body: string
+    body: string | null
     createdAt: Generated<Timestamp>
     authorId: string
     placeId: string

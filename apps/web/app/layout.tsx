@@ -8,6 +8,7 @@ import { getServerSession } from '@snacr/api'
 import './globals.css'
 import { ThemeProvider } from '~/components/ui'
 import AuthProvider from '~/providers/AuthProvider'
+import { ModalsProvider } from '~/providers/ModalProvider'
 import TrpcProvider from '~/providers/TrpcProvider'
 
 const lato = Lato({
@@ -36,7 +37,9 @@ export default async function RootLayout({ children }: PropsWithChildren) {
                 >
                     <TrpcProvider>
                         <AuthProvider session={session}>
-                            <>{children}</>
+                            <ModalsProvider>
+                                <>{children}</>
+                            </ModalsProvider>
                         </AuthProvider>
                     </TrpcProvider>
                 </ThemeProvider>

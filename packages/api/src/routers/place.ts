@@ -2,6 +2,7 @@ import { db } from '@snacr/db'
 
 import { authedProcedure, procedure, router } from '../trpc'
 import { createId } from '@paralleldrive/cuid2'
+import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
 export const placeRouter = router({
@@ -23,12 +24,12 @@ export const placeRouter = router({
     create: authedProcedure
         .input(
             z.object({
-                name: z.string().max(1),
-                description: z.string().min(5).optional()
+                name: z.string().min(3).max(20),
+                description: z.string().min(5).max(300).optional()
             })
         )
         .mutation(async ({ ctx, input }) => {
-            const newPlace = await db
+            await db
                 .insertInto('Place')
                 .values({
                     id: createId(),
@@ -37,8 +38,23 @@ export const placeRouter = router({
                     name: input.name
                 })
                 .returningAll()
-                .executeTakeFirst()
+                .executeTakeFirstOrThrow()
+                .then(async (place) => {
+                    await db
+                        .insertInto('Subscription')
+                        .values({
+                            placeId: place.id,
+                            userId: ctx.user.userId
+                        })
+                        .execute()
+                })
+                .catch((err) => {
+                    throw new TRPCError({
+                        code: 'INTERNAL_SERVER_ERROR',
+                        message: err.message
+                    })
+                })
 
-            return newPlace
+            return
         })
 })

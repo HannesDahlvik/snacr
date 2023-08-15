@@ -1,5 +1,8 @@
+'use client'
+
 import * as React from 'react'
 
+import { CircleNotch, Spinner } from '@phosphor-icons/react'
 import { Slot } from '@radix-ui/react-slot'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '~/lib/utils'
@@ -35,17 +38,22 @@ export interface ButtonProps
     extends React.ButtonHTMLAttributes<HTMLButtonElement>,
         VariantProps<typeof buttonVariants> {
     asChild?: boolean
+    loading?: boolean
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-    ({ className, variant, size, asChild = false, ...props }, ref) => {
+    ({ className, variant, size, asChild = false, loading, ...props }, ref) => {
         const Comp = asChild ? Slot : 'button'
         return (
             <Comp
+                disabled={props.disabled || loading}
                 className={cn(buttonVariants({ variant, size, className }))}
                 ref={ref}
                 {...props}
-            />
+            >
+                {props.children}
+                {loading && <CircleNotch weight="bold" size={20} className="ml-1 animate-spin" />}
+            </Comp>
         )
     }
 )

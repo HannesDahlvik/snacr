@@ -3,15 +3,15 @@ import * as React from 'react'
 import { Label } from './label'
 import { cn } from '~/lib/utils'
 
-export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
     label?: string
     error?: string
 }
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
+const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     ({ className, error, label, required, ...props }, ref) => {
         return (
-            <div className="flex flex-col items-start gap-1 w-full">
+            <div className="flex flex-col items-start gap-1">
                 {label && (
                     <div className="flex justify-between w-full mb-1">
                         <Label htmlFor={label}>
@@ -25,12 +25,11 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
                     </div>
                 )}
 
-                <input
+                <textarea
                     className={cn(
-                        'flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
+                        'flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
                         className
                     )}
-                    id={label}
                     ref={ref}
                     {...props}
                 />
@@ -38,6 +37,6 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         )
     }
 )
-Input.displayName = 'Input'
+Textarea.displayName = 'Textarea'
 
-export { Input }
+export { Textarea }

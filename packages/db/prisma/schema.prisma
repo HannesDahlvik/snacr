@@ -84,7 +84,7 @@ model Post {
   id        String   @id @unique
   type      PostType
   title     String
-  body      String
+  body      String?
   createdAt DateTime @default(dbgenerated("now()"))
 
   authorId String
