@@ -130,7 +130,10 @@ export default function Navbar() {
                                             </Link>
                                         </DropdownMenuItem>
                                         <DropdownMenuSeparator />
-                                        <DropdownMenuItem onClick={logout}>
+                                        <DropdownMenuItem
+                                            className="flex items-center gap-1"
+                                            onClick={logout}
+                                        >
                                             <SignOut />
                                             Logout
                                         </DropdownMenuItem>
