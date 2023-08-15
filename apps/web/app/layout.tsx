@@ -6,8 +6,6 @@ import { Lato } from 'next/font/google'
 import { getServerSession } from '@snacr/api'
 
 import './globals.css'
-import Navbar from '~/components/Navbar'
-import Sidebar from '~/components/Sidebar'
 import { ThemeProvider } from '~/components/ui'
 import AuthProvider from '~/providers/AuthProvider'
 import TrpcProvider from '~/providers/TrpcProvider'
@@ -38,13 +36,7 @@ export default async function RootLayout({ children }: PropsWithChildren) {
                 >
                     <TrpcProvider>
                         <AuthProvider session={session}>
-                            <div className="relative grid-main min-h-screen">
-                                <Navbar />
-
-                                <Sidebar />
-
-                                <main className="main-area">{children}</main>
-                            </div>
+                            <>{children}</>
                         </AuthProvider>
                     </TrpcProvider>
                 </ThemeProvider>
