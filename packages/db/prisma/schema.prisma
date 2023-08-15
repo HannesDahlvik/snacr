@@ -50,7 +50,7 @@ model Key {
 }
 
 model Place {
-  id          String   @id @default(dbgenerated("cuid()"))
+  id          String   @id @unique
   name        String   @unique
   description String?
   createdAt   DateTime @default(dbgenerated("now()"))
@@ -81,7 +81,7 @@ enum PostType {
 }
 
 model Post {
-  id        String   @id @default(dbgenerated("cuid()"))
+  id        String   @id @unique
   type      PostType
   title     String
   body      String
@@ -98,7 +98,7 @@ model Post {
 }
 
 model Comment {
-  id        String   @id @default(dbgenerated("cuid()"))
+  id        String   @id @unique
   text      String
   createdAt DateTime @default(dbgenerated("now()"))
 

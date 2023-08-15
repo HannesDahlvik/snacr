@@ -1,5 +1,7 @@
-import { snacrRouter } from '@snacr/api'
+import { createContext, snacrRouter } from '@snacr/api'
 
-export const caller = snacrRouter.createCaller({
-    type: 'rsc'
-})
+export const caller = snacrRouter.createCaller(
+    await createContext({
+        type: 'rsc'
+    })
+)

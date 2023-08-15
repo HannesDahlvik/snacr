@@ -5,6 +5,7 @@
     "scripts": {
         "web": "pnpm --filter @snacr/web --",
         "mobile": "pnpm --filter @snacr/mobile --",
+        "db": "pnpm --filter @snacr/db --",
         "build": "turbo run build",
         "bump": "node ./scripts/bump.js"
     },

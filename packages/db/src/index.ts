@@ -17,5 +17,6 @@ export const db = new Kysely<DB>({
     dialect
 })
 
+export type { DB } from './schema'
 export * from './enums'
 export * from './types'

@@ -43,7 +43,7 @@ export default function Navbar() {
 
     return (
         <nav className="sticky top-0 flex items-center h-20 w-full bg-background/90 border-b backdrop-blur">
-            <div className="grid grid-cols-3 items-center w-full px-10">
+            <div className="grid grid-cols-[1fr_640px_1fr] items-center w-full px-10">
                 <div>
                     <Link href="/" className="text-foreground">
                         Snacr
