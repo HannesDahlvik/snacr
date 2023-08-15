@@ -7,6 +7,7 @@ import { getServerSession } from '@snacr/api'
 
 import './globals.css'
 import Navbar from '~/components/Navbar'
+import Sidebar from '~/components/Sidebar'
 import { ThemeProvider } from '~/components/ui'
 import AuthProvider from '~/providers/AuthProvider'
 import TrpcProvider from '~/providers/TrpcProvider'
@@ -37,10 +38,12 @@ export default async function RootLayout({ children }: PropsWithChildren) {
                 >
                     <TrpcProvider>
                         <AuthProvider session={session}>
-                            <div className="flex flex-col min-h-screen">
+                            <div className="relative grid-main min-h-screen">
                                 <Navbar />
 
-                                <>{children}</>
+                                <Sidebar />
+
+                                <main className="main-area">{children}</main>
                             </div>
                         </AuthProvider>
                     </TrpcProvider>

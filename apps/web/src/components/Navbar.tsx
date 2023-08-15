@@ -42,15 +42,15 @@ export default function Navbar() {
     }
 
     return (
-        <nav className="sticky top-0 flex items-center h-20 w-full bg-background/90 border-b backdrop-blur">
-            <div className="grid grid-cols-[1fr_640px_1fr] items-center w-full px-10">
-                <div>
+        <nav className="navbar-area sticky top-0 flex items-center h-20 w-full bg-background/50 border-b backdrop-blur z-50">
+            <div className="relative flex justify-between items-center w-full px-10">
+                <div className="w-60">
                     <Link href="/" className="text-foreground">
                         Snacr
                     </Link>
                 </div>
 
-                <div className="flex justify-center items-center w-full">
+                <div className="flex justify-center items-center w-center">
                     <form
                         className="flex items-center gap-2 w-full"
                         onSubmit={handleSubmit(handleSearch)}
@@ -59,7 +59,7 @@ export default function Navbar() {
                     </form>
                 </div>
 
-                <div className="flex justify-end items-center gap-2">
+                <div className="flex justify-end items-center gap-2 w-60">
                     <IconContext.Provider
                         value={{
                             size: 20,
