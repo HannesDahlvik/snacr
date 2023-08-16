@@ -30,7 +30,7 @@ import { AvatarFallback } from '@radix-ui/react-avatar'
 import { useTheme } from 'next-themes'
 import { z } from 'zod'
 import { useZodForm } from '~/hooks/useZodForm'
-import { getInitials } from '~/lib/getInitials'
+import { getInitials } from '~/lib/utils'
 import { useAuth } from '~/providers/AuthProvider'
 
 const searchSchema = z.object({
