@@ -38,6 +38,32 @@ export const postsRouter = router({
                 .executeTakeFirstOrThrow()
             return post
         }),
+    getByPlaceId: procedure
+        .input(
+            z.object({
+                placeId: z.string().refine((val) => isCuid(val))
+            })
+        )
+        .query(async ({ input }) => {
+            const posts = await db
+                .selectFrom('Post')
+                .selectAll()
+                .where('Post.placeId', '=', input.placeId)
+                .orderBy('Post.createdAt', 'desc')
+                .select((eb) => [
+                    jsonObjectFrom(
+                        eb
+                            .selectFrom('Place')
+                            .selectAll('Place')
+                            .whereRef('Post.placeId', '=', 'Place.id')
+                    )
+                        .$castTo<Place>()
+                        .as('place')
+                ])
+                .execute()
+
+            return posts
+        }),
     create: authedProcedure
         .input(
             z.object({

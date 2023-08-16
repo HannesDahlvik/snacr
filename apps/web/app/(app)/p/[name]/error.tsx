@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { Button } from '~/components/ui'
 import { ErrorPage } from '~/types'
 
-export default function PlaceErrorPage({ error, reset }: ErrorPage) {
+export default function PlaceErrorPage({ error }: ErrorPage) {
     useEffect(() => {
         console.error(error)
     }, [error])

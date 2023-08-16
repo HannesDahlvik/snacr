@@ -110,10 +110,10 @@
 
 @layer components {
     .grid-main {
-        @apply grid grid-cols-[320px_1fr_320px] grid-rows-[80px_1fr];
+        @apply grid grid-cols-[320px_1fr] grid-rows-[80px_1fr];
         grid-template-areas:
-            'navbar navbar navbar'
-            'sidebar main other';
+            'navbar navbar'
+            'sidebar main';
     }
 
     .navbar-area {
@@ -125,7 +125,8 @@
     .main-area {
         grid-area: main;
     }
-    .other-area {
-        grid-area: other;
+
+    .absolute-center {
+        @apply absolute left-1/2 right-1/2 -translate-x-1/2;
     }
 }

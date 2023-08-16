@@ -8,7 +8,7 @@ export default async function Home() {
 
     return (
         <div className="flex flex-col items-center py-8">
-            <div className="flex flex-col gap-4 w-center">
+            <div className="absolute-center flex flex-col gap-4 w-center">
                 {posts.length === 0 && (
                     <div>
                         <h2 className="text-center">No Posts Found</h2>

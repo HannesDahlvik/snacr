@@ -9,7 +9,7 @@ export default async function AuthedCreatePage() {
 
     return (
         <div className="flex justify-center h-full">
-            <div className="w-center py-10">
+            <div className="absolute-center w-center py-10">
                 {subscribedPlaces.length === 0 ? (
                     <div className="text-center bg-secondary rounded-lg p-8 py-12">
                         <h2>You have not joined any places</h2>

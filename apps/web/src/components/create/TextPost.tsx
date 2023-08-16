@@ -37,7 +37,7 @@ export default function CreateTextPost({ place }: Props) {
     const handleCreatePost = (data: TextPostSchema) => {
         if (!place)
             return toast({
-                description: 'Select a place'
+                title: 'Select a place'
             })
 
         createPostMutation.mutate(

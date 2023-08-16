@@ -59,7 +59,7 @@ export default function Navbar() {
                     </Link>
                 </div>
 
-                <div className="absolute left-1/2 right-1/2 -translate-x-1/2 flex justify-center items-center w-center">
+                <div className="absolute-center flex justify-center items-center w-center">
                     <form
                         className="flex items-center gap-2 w-full"
                         onSubmit={handleSubmit(handleSearch)}
