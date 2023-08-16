@@ -52,6 +52,7 @@ model Key {
 model Place {
   id          String   @id @unique
   name        String   @unique
+  url         String   @unique
   description String?
   createdAt   DateTime @default(dbgenerated("now()"))
 
@@ -82,9 +83,9 @@ enum PostType {
 
 model Post {
   id        String   @id @unique
-  type      PostType
   title     String
   body      String?
+  type      PostType
   createdAt DateTime @default(dbgenerated("now()"))
 
   authorId String

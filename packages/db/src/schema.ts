@@ -28,15 +28,16 @@ export type Key = {
 export type Place = {
     id: string
     name: string
+    url: string
     description: string | null
     createdAt: Generated<Timestamp>
     creatorId: string
 }
 export type Post = {
     id: string
-    type: PostType
     title: string
     body: string | null
+    type: PostType
     createdAt: Generated<Timestamp>
     authorId: string
     placeId: string

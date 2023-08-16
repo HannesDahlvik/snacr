@@ -1,5 +1,7 @@
 'use client'
 
+import { useEffect, useState } from 'react'
+
 import { useRouter } from 'next/navigation'
 
 import { Button, Input, Textarea } from '../ui'
@@ -8,10 +10,11 @@ import { useModals } from '~/hooks/useModals'
 import { useToast } from '~/hooks/useToast'
 import { useZodForm } from '~/hooks/useZodForm'
 import { api } from '~/lib/api'
+import { createURL } from '~/lib/utils'
 
 const createPlaceSchema = z.object({
     name: z.string().min(3).max(20),
-    description: z.string().min(5).max(300).optional()
+    description: z.string().max(300).optional()
 })
 type CreatePlaceSchema = z.infer<typeof createPlaceSchema>
 
@@ -20,15 +23,27 @@ export default function CreatePlaceModal() {
     const { toast } = useToast()
     const router = useRouter()
 
+    const [url, setUrl] = useState('')
+
     const createPlaceMutation = api.place.create.useMutation()
 
     const {
         handleSubmit,
         register,
+        watch,
         formState: { errors }
     } = useZodForm({
         schema: createPlaceSchema
     })
+
+    useEffect(() => {
+        const subscribe = watch((value, { name, type }) => {
+            if (name === 'name') {
+                setUrl(createURL(value.name ? value.name : ''))
+            }
+        })
+        return () => subscribe.unsubscribe()
+    }, [watch])
 
     const handleCreatePlace = (data: CreatePlaceSchema) => {
         createPlaceMutation.mutate(
@@ -60,6 +75,14 @@ export default function CreatePlaceModal() {
                 required
                 error={errors.name?.message}
                 {...register('name')}
+            />
+
+            <Input
+                className="h-8 text-muted-foreground"
+                label="URL"
+                type="text"
+                value={url}
+                readOnly
             />
 
             <Textarea

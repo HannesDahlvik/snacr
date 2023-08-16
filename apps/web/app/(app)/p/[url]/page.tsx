@@ -5,8 +5,8 @@ import { caller } from '~/lib/caller'
 import { PlaceParamsProps } from '~/types'
 
 export default async function PlacePage({ params }: PlaceParamsProps) {
-    const place = await caller.place.getByName({
-        name: params.name
+    const place = await caller.place.getByUrl({
+        url: params.url
     })
     const posts = await caller.posts.getByPlaceId({
         placeId: place.id
@@ -33,7 +33,7 @@ export default async function PlacePage({ params }: PlaceParamsProps) {
                 {posts.map((post) => (
                     <Link
                         className="w-full"
-                        href={`/p/${post.place.name}/post/${post.id}`}
+                        href={`/p/${post.place.url}/post/${post.id}`}
                         key={post.id}
                     >
                         <PostCard post={post} />
