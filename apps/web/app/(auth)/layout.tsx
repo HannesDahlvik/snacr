@@ -17,7 +17,7 @@ export default async function AuthLayout({ children }: PropsWithChildren) {
 
             <h2 className="mb-8 text-6xl">SNACR</h2>
 
-            <div className="flex flex-col justify-center items-center w-[400px] bg-popover p-12 rounded-lg border shadow-xl">
+            <div className="flex flex-col justify-center items-center w-[400px] bg-secondary p-12 rounded-lg border shadow-xl">
                 {children}
             </div>
         </div>

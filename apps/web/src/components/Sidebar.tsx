@@ -34,7 +34,6 @@ function AuthedSidebar({ places }: Props) {
     return (
         <Fragment>
             <Button
-                variant="outline"
                 className="w-full"
                 onClick={() =>
                     modals.openModal({
