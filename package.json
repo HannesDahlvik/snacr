@@ -1,7 +1,12 @@
 {
     "name": "snacr",
-    "version": "0.0.0",
+    "version": "0.1.0",
     "private": true,
+    "workspaces": [
+        "apps/*",
+        "packages/*",
+        "packages/config/*"
+    ],
     "scripts": {
         "web": "pnpm --filter @snacr/web --",
         "mobile": "pnpm --filter @snacr/mobile --",
