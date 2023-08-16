@@ -75,6 +75,17 @@ export default function Navbar() {
                             weight: 'fill'
                         }}
                     >
+                        {user && (
+                            <div>
+                                <Link href="/create">
+                                    <Button>
+                                        Create
+                                        <Plus className="ml-1" weight="bold" size={18} />
+                                    </Button>
+                                </Link>
+                            </div>
+                        )}
+
                         <Button
                             size="icon"
                             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}

@@ -1,8 +1,8 @@
-import { PostType, db } from '@snacr/db'
+import { Place, PostType, db } from '@snacr/db'
 
-import { withPlace } from '../lib/helpers'
 import { authedProcedure, procedure, router } from '../trpc'
 import { createId, isCuid } from '@paralleldrive/cuid2'
+import { jsonObjectFrom } from 'kysely/helpers/postgres'
 import { z } from 'zod'
 
 export const postsRouter = router({
@@ -10,7 +10,17 @@ export const postsRouter = router({
         const posts = await db
             .selectFrom('Post')
             .selectAll()
-            .select((eb) => [withPlace(eb)])
+            .orderBy('Post.createdAt', 'desc')
+            .select((eb) => [
+                jsonObjectFrom(
+                    eb
+                        .selectFrom('Place')
+                        .selectAll('Place')
+                        .whereRef('Post.placeId', '=', 'Place.id')
+                )
+                    .$castTo<Place>()
+                    .as('place')
+            ])
             .execute()
         return posts
     }),
@@ -31,9 +41,9 @@ export const postsRouter = router({
     create: authedProcedure
         .input(
             z.object({
-                body: z.string(),
+                body: z.string().optional(),
                 placeId: z.string().refine((val) => isCuid(val)),
-                title: z.string().min(3),
+                title: z.string().min(3).max(300),
                 type: z.custom<PostType>()
             })
         )

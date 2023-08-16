@@ -45,30 +45,12 @@ export default function AuthSignupForm() {
     }
 
     return (
-        <form className="flex flex-col w-full" onSubmit={handleSubmit(handleSignup)}>
-            <Input
-                type="text"
-                className="border rounded mb-2 px-2"
-                placeholder="Jon Doe"
-                required
-                {...register('username')}
-            />
+        <form className="flex flex-col gap-4 w-full" onSubmit={handleSubmit(handleSignup)}>
+            <Input type="text" placeholder="Jon Doe" required {...register('username')} />
 
-            <Input
-                type="email"
-                className="border rounded mb-2 px-2"
-                placeholder="name@email.com"
-                required
-                {...register('email')}
-            />
+            <Input type="email" placeholder="name@email.com" required {...register('email')} />
 
-            <Input
-                type="password"
-                className="border rounded mb-2 px-2"
-                placeholder="******"
-                required
-                {...register('password')}
-            />
+            <Input type="password" placeholder="******" required {...register('password')} />
 
             <Button type="submit">Signup</Button>
         </form>

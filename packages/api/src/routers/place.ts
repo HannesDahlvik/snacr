@@ -29,24 +29,28 @@ export const placeRouter = router({
             })
         )
         .mutation(async ({ ctx, input }) => {
-            await db
-                .insertInto('Place')
-                .values({
-                    id: createId(),
-                    creatorId: ctx.user.userId,
-                    description: input.description,
-                    name: input.name
-                })
-                .returningAll()
-                .executeTakeFirstOrThrow()
-                .then(async (place) => {
-                    await db
+            const newPlace = await db
+                .transaction()
+                .execute(async (trx) => {
+                    const place = await trx
+                        .insertInto('Place')
+                        .values({
+                            id: createId(),
+                            creatorId: ctx.user.userId,
+                            description: input.description,
+                            name: input.name
+                        })
+                        .returningAll()
+                        .executeTakeFirstOrThrow()
+
+                    await trx
                         .insertInto('Subscription')
                         .values({
                             placeId: place.id,
                             userId: ctx.user.userId
                         })
-                        .execute()
+                        .executeTakeFirstOrThrow()
+                    return place
                 })
                 .catch((err) => {
                     throw new TRPCError({
@@ -55,6 +59,6 @@ export const placeRouter = router({
                     })
                 })
 
-            return
+            return newPlace
         })
 })
