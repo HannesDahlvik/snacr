@@ -18,7 +18,7 @@ export default async function PlacePage({ params }: PlaceParamsProps) {
                 <div className="absolute-center flex justify-between items-center w-center">
                     <div>
                         <h3>{place.name}</h3>
-                        <p className="text-muted-foreground text-sm">p/{place.name}</p>
+                        <p className="text-muted-foreground text-sm">p/{place.url}</p>
                     </div>
                 </div>
             </div>

@@ -13,13 +13,13 @@ export default function PostCard({ post }: Props) {
             <CardHeader>
                 <div>
                     <Link href={`/p/${post.place.url}`} className="text-sm hover:underline">
-                        p/{post.place.name}
+                        p/{post.place.url}
                     </Link>
                 </div>
                 <CardTitle>{post.title}</CardTitle>
             </CardHeader>
             <CardContent>
-                <p>{post.body}</p>
+                <p className="line-clamp-6">{post.body}</p>
             </CardContent>
         </Card>
     )
