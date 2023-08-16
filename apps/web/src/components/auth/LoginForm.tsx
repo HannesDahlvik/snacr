@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 
 import { Button, Input } from '../ui'
 import { z } from 'zod'
+import { useToast } from '~/hooks/useToast'
 import { useZodForm } from '~/hooks/useZodForm'
 import { api } from '~/lib/api'
 
@@ -14,9 +15,10 @@ const loginSchema = z.object({
 type LoginSchema = z.infer<typeof loginSchema>
 
 export default function AuthLoginForm() {
-    const loginMutation = api.auth.login.useMutation()
-
+    const { toast } = useToast()
     const router = useRouter()
+
+    const loginMutation = api.auth.login.useMutation()
 
     const {
         handleSubmit,
@@ -33,7 +35,13 @@ export default function AuthLoginForm() {
                 password: data.password
             },
             {
-                onError: (err) => console.error(err),
+                onError: (err) => {
+                    toast({
+                        title: 'Error',
+                        description: err.message,
+                        variant: 'destructive'
+                    })
+                },
                 onSuccess: () => {
                     router.replace('/')
                     router.refresh()
@@ -43,20 +51,22 @@ export default function AuthLoginForm() {
     }
 
     return (
-        <form className="flex flex-col" onSubmit={handleSubmit(handleLogin)}>
+        <form className="flex flex-col gap-4 w-full" onSubmit={handleSubmit(handleLogin)}>
             <Input
+                label="Email"
                 type="email"
-                className="border rounded mb-2 px-2"
                 placeholder="name@email.com"
                 required
+                error={errors.email?.message}
                 {...register('email')}
             />
 
             <Input
+                label="Password"
                 type="password"
-                className="border rounded mb-2 px-2"
                 placeholder="******"
                 required
+                error={errors.password?.message}
                 {...register('password')}
             />
 

@@ -6,9 +6,9 @@ import { Lato } from 'next/font/google'
 import { getServerSession } from '@snacr/api'
 
 import './globals.css'
-import Navbar from '~/components/Navbar'
-import { ThemeProvider } from '~/components/ui'
+import { ThemeProvider, Toaster } from '~/components/ui'
 import AuthProvider from '~/providers/AuthProvider'
+import { ModalsProvider } from '~/providers/ModalProvider'
 import TrpcProvider from '~/providers/TrpcProvider'
 
 const lato = Lato({
@@ -37,11 +37,11 @@ export default async function RootLayout({ children }: PropsWithChildren) {
                 >
                     <TrpcProvider>
                         <AuthProvider session={session}>
-                            <div className="flex flex-col min-h-screen">
-                                <Navbar />
+                            <ModalsProvider>
+                                <Toaster />
 
-                                <>{children}</>
-                            </div>
+                                {children}
+                            </ModalsProvider>
                         </AuthProvider>
                     </TrpcProvider>
                 </ThemeProvider>

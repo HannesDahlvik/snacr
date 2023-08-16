@@ -1,7 +1,8 @@
 generator kysely {
-  provider = "prisma-kysely"
-  output   = "../src"
-  fileName = "schema.ts"
+  provider     = "prisma-kysely"
+  output       = "../src"
+  fileName     = "schema.ts"
+  enumFileName = "enums.ts"
 }
 
 datasource db {
@@ -10,13 +11,21 @@ datasource db {
 }
 
 model User {
-  id             String    @id @unique
-  username       String    @unique
-  email          String    @unique
+  id             String @id @unique
+  username       String @unique
+  email          String @unique
   email_verified Int
   photo          String
-  auth_session   Session[]
-  auth_key       Key[]
+
+  auth_session Session[]
+  auth_key     Key[]
+
+  createdPlaces Place[]        @relation("CreatedBy")
+  subscriptions Subscription[]
+  posts         Post[]
+  votes         Vote[]
+  comments      Comment[]
+  commentVotes  CommentVote[]
 }
 
 model Session {
@@ -24,7 +33,8 @@ model Session {
   user_id        String
   active_expires BigInt
   idle_expires   BigInt
-  user           User   @relation(references: [id], fields: [user_id], onDelete: Cascade)
+
+  user User @relation(references: [id], fields: [user_id], onDelete: Cascade)
 
   @@index([user_id])
 }
@@ -33,7 +43,101 @@ model Key {
   id              String  @id @unique
   hashed_password String?
   user_id         String
-  user            User    @relation(references: [id], fields: [user_id], onDelete: Cascade)
+
+  user User @relation(references: [id], fields: [user_id], onDelete: Cascade)
 
   @@index([user_id])
+}
+
+model Place {
+  id          String   @id @unique
+  name        String   @unique
+  description String?
+  createdAt   DateTime @default(dbgenerated("now()"))
+
+  posts       Post[]
+  subscribers Subscription[]
+
+  creator   User   @relation("CreatedBy", fields: [creatorId], references: [id])
+  creatorId String
+
+  @@index([name])
+}
+
+model Subscription {
+  placeId String
+  userId  String
+
+  place Place @relation(fields: [placeId], references: [id])
+  user  User  @relation(fields: [userId], references: [id])
+
+  @@id([userId, placeId])
+}
+
+enum PostType {
+  text
+  media
+  link
+}
+
+model Post {
+  id        String   @id @unique
+  type      PostType
+  title     String
+  body      String?
+  createdAt DateTime @default(dbgenerated("now()"))
+
+  authorId String
+  placeId  String
+
+  comments Comment[]
+  votes    Vote[]
+
+  place Place @relation(fields: [placeId], references: [id])
+  user  User  @relation(fields: [authorId], references: [id])
+}
+
+model Comment {
+  id        String   @id @unique
+  text      String
+  createdAt DateTime @default(dbgenerated("now()"))
+
+  authorId  String
+  postId    String
+  commentId String?
+  replyToId String?
+
+  votes CommentVote[]
+
+  author  User      @relation(fields: [authorId], references: [id])
+  post    Post      @relation(fields: [postId], references: [id], onDelete: Cascade)
+  replyTo Comment?  @relation("ReplyTo", fields: [replyToId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  replies Comment[] @relation("ReplyTo")
+}
+
+enum VoteType {
+  UP
+  DOWN
+}
+
+model Vote {
+  postId String
+  userId String
+  type   VoteType
+
+  user User @relation(fields: [userId], references: [id])
+  post Post @relation(fields: [postId], references: [id], onDelete: Cascade)
+
+  @@id([userId, postId])
+}
+
+model CommentVote {
+  commentId String
+  userId    String
+  type      VoteType
+
+  user    User    @relation(fields: [userId], references: [id])
+  comment Comment @relation(fields: [commentId], references: [id], onDelete: Cascade)
+
+  @@id([userId, commentId])
 }

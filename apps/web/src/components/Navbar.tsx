@@ -16,7 +16,16 @@ import {
     Input,
     Separator
 } from './ui'
-import { CaretDown, Gear, IconContext, Moon, SignOut, Sun, UserCircle } from '@phosphor-icons/react'
+import {
+    CaretDown,
+    Gear,
+    IconContext,
+    Moon,
+    Plus,
+    SignOut,
+    Sun,
+    UserCircle
+} from '@phosphor-icons/react'
 import { AvatarFallback } from '@radix-ui/react-avatar'
 import { useTheme } from 'next-themes'
 import { z } from 'zod'
@@ -42,15 +51,15 @@ export default function Navbar() {
     }
 
     return (
-        <div className="flex items-center h-20 w-full bg-background border-b">
-            <div className="grid grid-cols-3 items-center w-full px-10">
+        <nav className="navbar-area sticky top-0 flex items-center h-20 w-full bg-secondary/75 border-b backdrop-blur z-50">
+            <div className="relative flex justify-between items-center w-full px-10">
                 <div>
                     <Link href="/" className="text-foreground">
                         Snacr
                     </Link>
                 </div>
 
-                <div className="flex justify-center items-center w-full">
+                <div className="absolute-center flex justify-center items-center w-center">
                     <form
                         className="flex items-center gap-2 w-full"
                         onSubmit={handleSubmit(handleSearch)}
@@ -66,6 +75,17 @@ export default function Navbar() {
                             weight: 'fill'
                         }}
                     >
+                        {user && (
+                            <div>
+                                <Link href="/create">
+                                    <Button>
+                                        Create
+                                        <Plus className="ml-1" weight="bold" size={18} />
+                                    </Button>
+                                </Link>
+                            </div>
+                        )}
+
                         <Button
                             size="icon"
                             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
@@ -121,7 +141,10 @@ export default function Navbar() {
                                             </Link>
                                         </DropdownMenuItem>
                                         <DropdownMenuSeparator />
-                                        <DropdownMenuItem onClick={logout}>
+                                        <DropdownMenuItem
+                                            className="flex items-center gap-1"
+                                            onClick={logout}
+                                        >
                                             <SignOut />
                                             Logout
                                         </DropdownMenuItem>
@@ -132,6 +155,6 @@ export default function Navbar() {
                     </IconContext.Provider>
                 </div>
             </div>
-        </div>
+        </nav>
     )
 }
