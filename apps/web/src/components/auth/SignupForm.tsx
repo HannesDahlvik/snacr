@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation'
 
 import { Button, Input } from '../ui'
 import { z } from 'zod'
+import { useToast } from '~/hooks/useToast'
 import { useZodForm } from '~/hooks/useZodForm'
 import { api } from '~/lib/api'
 
@@ -15,9 +16,10 @@ const signupSchema = z.object({
 type SignupSchema = z.infer<typeof signupSchema>
 
 export default function AuthSignupForm() {
-    const signupMutation = api.auth.signup.useMutation()
-
+    const { toast } = useToast()
     const router = useRouter()
+
+    const signupMutation = api.auth.signup.useMutation()
 
     const {
         handleSubmit,
@@ -35,7 +37,13 @@ export default function AuthSignupForm() {
                 password: data.password
             },
             {
-                onError: (err) => console.error(err),
+                onError: (err) => {
+                    toast({
+                        title: 'Error',
+                        description: err.message,
+                        variant: 'destructive'
+                    })
+                },
                 onSuccess: () => {
                     router.replace('/')
                     router.refresh()
@@ -46,11 +54,32 @@ export default function AuthSignupForm() {
 
     return (
         <form className="flex flex-col gap-4 w-full" onSubmit={handleSubmit(handleSignup)}>
-            <Input type="text" placeholder="Jon Doe" required {...register('username')} />
+            <Input
+                label="Username"
+                type="text"
+                placeholder="Jon Doe"
+                required
+                error={errors.username?.message}
+                {...register('username')}
+            />
 
-            <Input type="email" placeholder="name@email.com" required {...register('email')} />
+            <Input
+                label="Email"
+                type="email"
+                placeholder="name@email.com"
+                required
+                error={errors.email?.message}
+                {...register('email')}
+            />
 
-            <Input type="password" placeholder="******" required {...register('password')} />
+            <Input
+                label="Password"
+                type="password"
+                placeholder="******"
+                required
+                error={errors.password?.message}
+                {...register('password')}
+            />
 
             <Button type="submit">Signup</Button>
         </form>

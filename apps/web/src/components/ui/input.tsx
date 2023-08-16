@@ -14,14 +14,18 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
             <div className="flex flex-col items-start gap-1 w-full">
                 {label && (
                     <div className="flex justify-between w-full mb-1">
-                        <Label htmlFor={label}>
+                        <Label className="flex items-center" htmlFor={label}>
                             {label}{' '}
                             {required && (
                                 <span className="text-red-500 text-base leading-3">*</span>
                             )}
                         </Label>
 
-                        {error && <p className="text-sm text-red-500 leading-3 !mt-0">{error}</p>}
+                        {error && (
+                            <p className="text-right text-sm text-red-500 leading-3 !mt-0">
+                                {error}
+                            </p>
+                        )}
                     </div>
                 )}
 

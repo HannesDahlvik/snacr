@@ -6,7 +6,7 @@ import { Lato } from 'next/font/google'
 import { getServerSession } from '@snacr/api'
 
 import './globals.css'
-import { ThemeProvider } from '~/components/ui'
+import { ThemeProvider, Toaster } from '~/components/ui'
 import AuthProvider from '~/providers/AuthProvider'
 import { ModalsProvider } from '~/providers/ModalProvider'
 import TrpcProvider from '~/providers/TrpcProvider'
@@ -38,7 +38,9 @@ export default async function RootLayout({ children }: PropsWithChildren) {
                     <TrpcProvider>
                         <AuthProvider session={session}>
                             <ModalsProvider>
-                                <>{children}</>
+                                <Toaster />
+
+                                {children}
                             </ModalsProvider>
                         </AuthProvider>
                     </TrpcProvider>

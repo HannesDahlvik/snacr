@@ -11,7 +11,7 @@ export interface TextareaProps extends React.TextareaHTMLAttributes<HTMLTextArea
 const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(
     ({ className, error, label, required, ...props }, ref) => {
         return (
-            <div className="flex flex-col items-start gap-1">
+            <div className="flex flex-col items-start gap-1 w-full">
                 {label && (
                     <div className="flex justify-between w-full mb-1">
                         <Label htmlFor={label}>

@@ -46,7 +46,7 @@ function AuthedSidebar({ places }: Props) {
                 Create Place
             </Button>
 
-            <div className="flex flex-col mt-5">
+            <div className="flex flex-col gap-1 mt-5">
                 <p className="text-muted-foreground mb-2">Joined Places</p>
                 {places.length === 0 && (
                     <p className="text-center">You have not joined any places</p>
