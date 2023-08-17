@@ -7,7 +7,7 @@ export interface ErrorPage {
 
 export type PlaceParamsProps = {
     params: {
-        name: string
+        url: string
     }
 }
 

@@ -52,7 +52,7 @@ function AuthedSidebar({ places }: Props) {
                 )}
 
                 {places.map((place) => (
-                    <SidebarLink title={place.name} href={`/p/${place.name}`} key={place.id} />
+                    <SidebarLink title={place.name} href={`/p/${place.url}`} key={place.id} />
                 ))}
             </div>
         </Fragment>

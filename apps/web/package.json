@@ -1,6 +1,6 @@
 {
     "name": "@snacr/web",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "scripts": {
         "dev": "pnpm with-env next dev",
         "build": "pnpm with-env next build",
