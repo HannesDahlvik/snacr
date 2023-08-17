@@ -93,10 +93,6 @@ export default function Navbar() {
                             {theme === 'dark' ? <Sun /> : <Moon />}
                         </Button>
 
-                        <div className="h-10">
-                            <Separator className="mx-2" orientation="vertical" />
-                        </div>
-
                         {!user ? (
                             <Fragment>
                                 <Link href="/login">
@@ -109,12 +105,14 @@ export default function Navbar() {
                         ) : (
                             <div className="flex items-center gap-2 cursor-pointer">
                                 <DropdownMenu>
-                                    <DropdownMenuTrigger className="flex items-center gap-1 outline-none">
+                                    <DropdownMenuTrigger className="flex items-center gap-2 p-1 px-3 rounded border border-transparent hover:border-border outline-none">
                                         <Avatar className="border">
                                             <AvatarFallback>
                                                 {getInitials(user.username)}
                                             </AvatarFallback>
                                         </Avatar>
+
+                                        <p>{user.username}</p>
 
                                         <CaretDown />
                                     </DropdownMenuTrigger>

@@ -3,6 +3,7 @@ import { RouterOutputs, getServerSession } from '@snacr/api'
 import PostCommentVote from './CommentVote'
 import CreateCommentButton from './CreateCommentButton'
 import PostDeleteCommentButton from './DeleteCommentButton'
+import PostNoComments from './NoComments'
 
 interface Props {
     comments: RouterOutputs['comments']['getByPostId']
@@ -21,6 +22,8 @@ export default async function PostPageCommentsSidebar({ comments, postId }: Prop
             </div>
 
             <div className="flex flex-col w-full h-[calc(100vh-80px-73px)] overflow-y-scroll">
+                {comments.length === 0 && <PostNoComments />}
+
                 {comments.map((comment) => {
                     const isVoteAuthor = comment.votes.map(
                         (val) => val.userId === session?.user?.userId
