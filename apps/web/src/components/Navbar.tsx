@@ -4,6 +4,7 @@ import { Fragment } from 'react'
 
 import Link from 'next/link'
 
+import packageJSON from '../../package.json'
 import {
     Avatar,
     Button,
@@ -13,8 +14,7 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-    Input,
-    Separator
+    Input
 } from './ui'
 import {
     CaretDown,
@@ -53,10 +53,14 @@ export default function Navbar() {
     return (
         <nav className="navbar-area sticky top-0 flex items-center h-20 w-full bg-secondary/75 border-b backdrop-blur z-50">
             <div className="relative flex justify-between items-center w-full px-10">
-                <div>
+                <div className="flex items-center gap-2">
                     <Link href="/" className="text-foreground">
                         Snacr
                     </Link>
+
+                    <p className="p-[2px] border border-ring rounded bg-muted text-xs">
+                        v{packageJSON.version}
+                    </p>
                 </div>
 
                 <div className="absolute-center flex justify-center items-center w-center">

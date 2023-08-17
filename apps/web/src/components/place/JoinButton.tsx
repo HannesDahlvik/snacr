@@ -60,7 +60,17 @@ export default function PlacePageJoinButton({ hasJoinedPlace, place }: Props) {
         )
     }
 
-    if (user && !hasJoinedPlace) return <Button onClick={handleJoinPlace}>Join</Button>
-    else if (hasJoinedPlace) return <Button onClick={handleLeavePlace}>Leave</Button>
+    if (user && !hasJoinedPlace)
+        return (
+            <Button variant="outline" onClick={handleJoinPlace}>
+                Join
+            </Button>
+        )
+    else if (hasJoinedPlace)
+        return (
+            <Button variant="outline" onClick={handleLeavePlace}>
+                Leave
+            </Button>
+        )
     else return null
 }
