@@ -6,7 +6,8 @@ export const pool = new Pool({
     database: process.env.DATABASE_NAME,
     host: process.env.DATABASE_HOST,
     user: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASSWORD
+    password: process.env.DATABASE_PASSWORD,
+    ssl: process.env.NODE_ENV === 'production' ? true : false
 })
 
 const dialect = new PostgresDialect({
