@@ -2,7 +2,7 @@ import { db } from '@snacr/db'
 
 import { createURL } from '../lib/utils'
 import { authedProcedure, procedure, router } from '../trpc'
-import { createId } from '@paralleldrive/cuid2'
+import { createId, isCuid } from '@paralleldrive/cuid2'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
@@ -62,5 +62,37 @@ export const placeRouter = router({
                 })
 
             return newPlace
+        }),
+    join: authedProcedure
+        .input(
+            z.object({
+                placeId: z.string().refine((val) => isCuid(val))
+            })
+        )
+        .mutation(async ({ ctx, input }) => {
+            const joinedPlace = await db
+                .insertInto('Subscription')
+                .values({
+                    placeId: input.placeId,
+                    userId: ctx.user.userId
+                })
+                .returningAll()
+                .executeTakeFirstOrThrow()
+
+            return joinedPlace
+        }),
+    leave: authedProcedure
+        .input(
+            z.object({
+                placeId: z.string().refine((val) => isCuid(val))
+            })
+        )
+        .mutation(async ({ input }) => {
+            const leftPlace = await db
+                .deleteFrom('Subscription')
+                .where('Subscription.placeId', '=', input.placeId)
+                .executeTakeFirstOrThrow()
+
+            return leftPlace.numDeletedRows
         })
 })

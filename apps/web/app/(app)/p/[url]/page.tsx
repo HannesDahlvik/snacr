@@ -1,15 +1,26 @@
 import Link from 'next/link'
 
+import { getServerSession } from '@snacr/api'
+
+import PlacePageJoinButton from '~/components/place/JoinButton'
 import PostCard from '~/components/post/Card'
 import { caller } from '~/lib/caller'
 import { PlaceParamsProps } from '~/types'
 
 export default async function PlacePage({ params }: PlaceParamsProps) {
+    const session = await getServerSession()
     const place = await caller.place.getByUrl({
         url: params.url
     })
     const posts = await caller.posts.getByPlaceId({
         placeId: place.id
+    })
+    const subscribedPlaces = await caller.subscriptions.places()
+
+    let hasJoinedPlace = false
+    subscribedPlaces.map((joinedPlace) => {
+        if (joinedPlace.id === place.id) hasJoinedPlace = true
+        else hasJoinedPlace = false
     })
 
     return (
@@ -19,6 +30,10 @@ export default async function PlacePage({ params }: PlaceParamsProps) {
                     <div>
                         <h3>{place.name}</h3>
                         <p className="text-muted-foreground text-sm">p/{place.url}</p>
+                    </div>
+
+                    <div>
+                        <PlacePageJoinButton place={place} hasJoinedPlace={hasJoinedPlace} />
                     </div>
                 </div>
             </div>
