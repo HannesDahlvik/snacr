@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { getServerSession } from '@snacr/api'
+import { RouterOutputs, getServerSession } from '@snacr/api'
 
 import PlacePageJoinButton from '~/components/place/JoinButton'
 import PostCard from '~/components/post/Card'
@@ -15,13 +15,15 @@ export default async function PlacePage({ params }: PlaceParamsProps) {
     const posts = await caller.posts.getByPlaceId({
         placeId: place.id
     })
-    const subscribedPlaces = await caller.subscriptions.places()
+    let subscribedPlaces: RouterOutputs['subscriptions']['places'] | undefined
+    if (session) subscribedPlaces = await caller.subscriptions.places()
 
     let hasJoinedPlace = false
-    subscribedPlaces.map((joinedPlace) => {
-        if (joinedPlace.id === place.id) hasJoinedPlace = true
-        else hasJoinedPlace = false
-    })
+    if (subscribedPlaces)
+        subscribedPlaces.map((joinedPlace) => {
+            if (joinedPlace.id === place.id) hasJoinedPlace = true
+            else hasJoinedPlace = false
+        })
 
     return (
         <div className="flex flex-col items-center">
