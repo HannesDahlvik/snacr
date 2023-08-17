@@ -27,6 +27,20 @@ export const commentsRouter = router({
 
             return newComment
         }),
+    delete: authedProcedure
+        .input(
+            z.object({
+                commentId: z.string().refine((val) => isCuid(val))
+            })
+        )
+        .mutation(async ({ input }) => {
+            const result = await db
+                .deleteFrom('Comment')
+                .where('Comment.id', '=', input.commentId)
+                .executeTakeFirst()
+
+            return result.numDeletedRows
+        }),
     getByPostId: procedure
         .input(
             z.object({

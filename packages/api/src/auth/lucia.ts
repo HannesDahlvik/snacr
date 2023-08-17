@@ -1,3 +1,5 @@
+import { cache } from 'react'
+
 import { cookies } from 'next/headers'
 
 import { pool } from '@snacr/db'
@@ -30,10 +32,10 @@ export const auth = lucia({
 
 export type Auth = typeof auth
 
-export const getServerSession = () => {
+export const getServerSession = cache(() => {
     const authRequest = auth.handleRequest({
         request: null,
         cookies
     })
     return authRequest.validate()
-}
+})
