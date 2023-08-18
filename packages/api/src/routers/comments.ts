@@ -86,13 +86,15 @@ export const commentsRouter = router({
                 .selectFrom('CommentVote')
                 .selectAll()
                 .where('CommentVote.commentId', '=', input.commentId)
+                .where('CommentVote.userId', '=', ctx.user.userId)
                 .executeTakeFirst()
                 .then(async (vote) => {
-                    if (vote) {
+                    if (vote && vote.userId === ctx.user.userId) {
                         if (vote.type === input.type) {
                             const removedVote = await db
                                 .deleteFrom('CommentVote')
                                 .where('CommentVote.commentId', '=', input.commentId)
+                                .where('CommentVote.userId', '=', ctx.user.userId)
                                 .executeTakeFirstOrThrow()
 
                             return removedVote
@@ -103,6 +105,7 @@ export const commentsRouter = router({
                                     type: vote.type === 'DOWN' ? 'UP' : 'DOWN'
                                 })
                                 .where('CommentVote.commentId', '=', input.commentId)
+                                .where('CommentVote.userId', '=', ctx.user.userId)
                                 .executeTakeFirstOrThrow()
 
                             return updatedVote
