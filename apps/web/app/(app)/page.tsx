@@ -1,5 +1,3 @@
-import Link from 'next/link'
-
 import PostCard from '~/components/post/Card'
 import { caller } from '~/lib/caller'
 
@@ -16,13 +14,7 @@ export default async function Home() {
                 )}
 
                 {posts.map((post) => (
-                    <Link
-                        className="w-full"
-                        href={`/p/${post.place?.url}/post/${post.id}`}
-                        key={post.id}
-                    >
-                        <PostCard post={post} />
-                    </Link>
+                    <PostCard post={post} key={post.id} />
                 ))}
             </div>
         </div>

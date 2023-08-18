@@ -1,5 +1,3 @@
-import Link from 'next/link'
-
 import { RouterOutputs, getServerSession } from '@snacr/api'
 
 import PlacePageJoinButton from '~/components/place/JoinButton'
@@ -18,13 +16,6 @@ export default async function PlacePage({ params }: PlaceParamsProps) {
     let subscribedPlaces: RouterOutputs['subscriptions']['places'] | undefined
     if (session) subscribedPlaces = await caller.subscriptions.places()
 
-    let hasJoinedPlace = false
-    if (subscribedPlaces)
-        subscribedPlaces.map((joinedPlace) => {
-            if (joinedPlace.id === place.id) hasJoinedPlace = true
-            else hasJoinedPlace = false
-        })
-
     return (
         <div className="flex flex-col items-center">
             <div className="flex justify-center items-center h-40 w-full bg-secondary/75 border-b">
@@ -34,9 +25,14 @@ export default async function PlacePage({ params }: PlaceParamsProps) {
                         <p className="text-muted-foreground text-sm">p/{place.url}</p>
                     </div>
 
-                    <div>
-                        <PlacePageJoinButton place={place} hasJoinedPlace={hasJoinedPlace} />
-                    </div>
+                    {session && (
+                        <div>
+                            <PlacePageJoinButton
+                                place={place}
+                                subscribedPlaces={subscribedPlaces}
+                            />
+                        </div>
+                    )}
                 </div>
             </div>
 
@@ -48,13 +44,7 @@ export default async function PlacePage({ params }: PlaceParamsProps) {
                 )}
 
                 {posts.map((post) => (
-                    <Link
-                        className="w-full"
-                        href={`/p/${post.place.url}/post/${post.id}`}
-                        key={post.id}
-                    >
-                        <PostCard post={post} />
-                    </Link>
+                    <PostCard post={post} key={post.id} />
                 ))}
             </div>
         </div>

@@ -1,4 +1,4 @@
-import { Place, PostType, db } from '@snacr/db'
+import { Place, PostType, User, db } from '@snacr/db'
 
 import { authedProcedure, procedure, router } from '../trpc'
 import { createId, isCuid } from '@paralleldrive/cuid2'
@@ -19,7 +19,15 @@ export const postsRouter = router({
                         .whereRef('Post.placeId', '=', 'Place.id')
                 )
                     .$castTo<Place>()
-                    .as('place')
+                    .as('place'),
+                jsonObjectFrom(
+                    eb
+                        .selectFrom('User')
+                        .selectAll('User')
+                        .whereRef('User.id', '=', 'Post.authorId')
+                )
+                    .$castTo<User>()
+                    .as('user')
             ])
             .execute()
         return posts
@@ -58,7 +66,15 @@ export const postsRouter = router({
                             .whereRef('Post.placeId', '=', 'Place.id')
                     )
                         .$castTo<Place>()
-                        .as('place')
+                        .as('place'),
+                    jsonObjectFrom(
+                        eb
+                            .selectFrom('User')
+                            .selectAll('User')
+                            .whereRef('User.id', '=', 'Post.authorId')
+                    )
+                        .$castTo<User>()
+                        .as('user')
                 ])
                 .execute()
 
