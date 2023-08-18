@@ -1,26 +1,37 @@
 'use client'
 
+import { useEffect, useState } from 'react'
+
 import { useRouter } from 'next/navigation'
 
+import { RouterOutputs } from '@snacr/api'
 import { Place } from '@snacr/db'
 
 import { Button } from '../ui'
 import { useToast } from '~/hooks/useToast'
 import { api } from '~/lib/api'
-import { useAuth } from '~/providers/AuthProvider'
 
 interface Props {
     place: Place
-    hasJoinedPlace: boolean
+    subscribedPlaces?: RouterOutputs['subscriptions']['places']
 }
 
-export default function PlacePageJoinButton({ hasJoinedPlace, place }: Props) {
-    const { user } = useAuth()
+export default function PlacePageJoinButton({ place, subscribedPlaces }: Props) {
     const { toast } = useToast()
     const router = useRouter()
 
     const joinPlaceMutation = api.place.join.useMutation()
     const leavePlaceMutation = api.place.leave.useMutation()
+
+    const [hasJoinedPlace, setHasJoinedPlace] = useState(false)
+
+    useEffect(() => {
+        if (subscribedPlaces) {
+            const found = subscribedPlaces.find((joinedPlace) => joinedPlace.id === place.id)
+            if (found) setHasJoinedPlace(true)
+            else setHasJoinedPlace(false)
+        }
+    }, [subscribedPlaces, place])
 
     const handleJoinPlace = () => {
         joinPlaceMutation.mutate(
@@ -60,7 +71,7 @@ export default function PlacePageJoinButton({ hasJoinedPlace, place }: Props) {
         )
     }
 
-    if (user && !hasJoinedPlace)
+    if (!hasJoinedPlace)
         return (
             <Button variant="outline" onClick={handleJoinPlace}>
                 Join

@@ -1,4 +1,4 @@
-import { Place, Post } from '@snacr/db'
+import { Place, Post, User } from '@snacr/db'
 
 export interface ErrorPage {
     error: Error
@@ -19,4 +19,9 @@ export type PlacePostParamsProps = {
 
 export type PostWithPlace = Post & {
     place: Place
+}
+
+export type PostWithPlaceAndUser = Post & {
+    place: Place
+    user: User
 }
