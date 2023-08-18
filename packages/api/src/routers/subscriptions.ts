@@ -9,8 +9,10 @@ export const subscriptionsRouter = router({
             .where('userId', '=', ctx.user.userId)
             .leftJoin('Place', 'Subscription.placeId', 'Place.id')
             .selectAll(['Place', 'Subscription'])
+            .orderBy('Place.name', 'asc')
             .$castTo<Place & Subscription>()
             .execute()
+
         return subscribedPlaces
     })
 })
