@@ -22,7 +22,7 @@ export default function Sidebar({ places }: Props) {
     const { user } = useAuth()
 
     return (
-        <div className="sidebar-area fixed top-20 left-0 h-[calc(100vh-80px)] w-80 bg-secondary/75 p-10 border-r z-40">
+        <div className="sidebar-area fixed top-20 left-0 h-[calc(100vh-80px)] w-80 bg-secondary p-10 border-r z-40">
             {user ? <AuthedSidebar places={places} /> : <NormalSidebar />}
         </div>
     )

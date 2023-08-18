@@ -25,12 +25,14 @@ export default async function PostPageCommentsSidebar({ comments, postId }: Prop
                 {comments.length === 0 && <PostNoComments />}
 
                 {comments.map((comment) => {
-                    const isVoteAuthor = comment.votes.map(
+                    const isVoteAuthor = comment.votes.find(
                         (val) => val.userId === session?.user?.userId
-                    )[0]
-                    const isUpvote = comment.votes.map((val) =>
-                        val.type === 'UP' ? true : false
-                    )[0]
+                    )
+                    const isUpvote = comment.votes.find((val) => {
+                        return val.type === 'UP' && val.userId === session?.user.userId
+                            ? true
+                            : false
+                    })
                     let votes = 0
                     comment.votes.map((vote) => (vote.type === 'UP' ? votes++ : votes--))
 
@@ -50,8 +52,8 @@ export default async function PostPageCommentsSidebar({ comments, postId }: Prop
                                 <PostCommentVote
                                     type="UP"
                                     comment={comment}
-                                    isUpvote={isUpvote}
-                                    isVoteAuthor={isVoteAuthor}
+                                    isUpvote={isUpvote ? true : false}
+                                    isVoteAuthor={isVoteAuthor ? true : false}
                                 />
 
                                 <p>{votes}</p>
@@ -59,8 +61,8 @@ export default async function PostPageCommentsSidebar({ comments, postId }: Prop
                                 <PostCommentVote
                                     type="DOWN"
                                     comment={comment}
-                                    isUpvote={isUpvote}
-                                    isVoteAuthor={isVoteAuthor}
+                                    isUpvote={isUpvote ? true : false}
+                                    isVoteAuthor={isVoteAuthor ? true : false}
                                 />
                             </div>
                         </div>

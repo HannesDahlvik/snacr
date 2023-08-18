@@ -1,8 +1,8 @@
-import { Place, PostType, User, db } from '@snacr/db'
+import { Place, PostType, User, Vote, VoteType, db } from '@snacr/db'
 
 import { authedProcedure, procedure, router } from '../trpc'
 import { createId, isCuid } from '@paralleldrive/cuid2'
-import { jsonObjectFrom } from 'kysely/helpers/postgres'
+import { jsonArrayFrom, jsonObjectFrom } from 'kysely/helpers/postgres'
 import { z } from 'zod'
 
 export const postsRouter = router({
@@ -27,7 +27,12 @@ export const postsRouter = router({
                         .whereRef('User.id', '=', 'Post.authorId')
                 )
                     .$castTo<User>()
-                    .as('user')
+                    .as('user'),
+                jsonArrayFrom(
+                    eb.selectFrom('Vote').selectAll('Vote').whereRef('Vote.postId', '=', 'Post.id')
+                )
+                    .$castTo<Vote[]>()
+                    .as('votes')
             ])
             .execute()
         return posts
@@ -43,6 +48,32 @@ export const postsRouter = router({
                 .selectFrom('Post')
                 .selectAll()
                 .where('Post.id', '=', input.postId)
+                .select((eb) => [
+                    jsonObjectFrom(
+                        eb
+                            .selectFrom('Place')
+                            .selectAll('Place')
+                            .whereRef('Post.placeId', '=', 'Place.id')
+                    )
+                        .$castTo<Place>()
+                        .as('place'),
+                    jsonObjectFrom(
+                        eb
+                            .selectFrom('User')
+                            .selectAll('User')
+                            .whereRef('User.id', '=', 'Post.authorId')
+                    )
+                        .$castTo<User>()
+                        .as('user'),
+                    jsonArrayFrom(
+                        eb
+                            .selectFrom('Vote')
+                            .selectAll('Vote')
+                            .whereRef('Vote.postId', '=', 'Post.id')
+                    )
+                        .$castTo<Vote[]>()
+                        .as('votes')
+                ])
                 .executeTakeFirstOrThrow()
             return post
         }),
@@ -74,7 +105,15 @@ export const postsRouter = router({
                             .whereRef('User.id', '=', 'Post.authorId')
                     )
                         .$castTo<User>()
-                        .as('user')
+                        .as('user'),
+                    jsonArrayFrom(
+                        eb
+                            .selectFrom('Vote')
+                            .selectAll('Vote')
+                            .whereRef('Vote.postId', '=', 'Post.id')
+                    )
+                        .$castTo<Vote[]>()
+                        .as('votes')
                 ])
                 .execute()
 
@@ -104,5 +143,58 @@ export const postsRouter = router({
                 .executeTakeFirst()
 
             return newPlace
+        }),
+    vote: authedProcedure
+        .input(
+            z.object({
+                postId: z.string().refine((val) => isCuid(val)),
+                type: z.custom<VoteType>()
+            })
+        )
+        .mutation(async ({ ctx, input }) => {
+            await db
+                .selectFrom('Vote')
+                .selectAll()
+                .where('Vote.postId', '=', input.postId)
+                .where('Vote.userId', '=', ctx.user.userId)
+                .executeTakeFirst()
+                .then(async (vote) => {
+                    if (vote && vote.userId === ctx.user.userId) {
+                        if (vote.type === input.type) {
+                            const removedVote = await db
+                                .deleteFrom('Vote')
+                                .where('Vote.postId', '=', input.postId)
+                                .where('Vote.userId', '=', ctx.user.userId)
+                                .executeTakeFirstOrThrow()
+
+                            return removedVote
+                        } else if (vote.type !== input.type) {
+                            const updatedVote = await db
+                                .updateTable('Vote')
+                                .set({
+                                    type: vote.type === 'DOWN' ? 'UP' : 'DOWN'
+                                })
+                                .where('Vote.postId', '=', input.postId)
+                                .where('Vote.userId', '=', ctx.user.userId)
+                                .executeTakeFirstOrThrow()
+
+                            return updatedVote
+                        }
+
+                        return vote
+                    } else {
+                        const newVote = await db
+                            .insertInto('Vote')
+                            .values({
+                                postId: input.postId,
+                                type: input.type,
+                                userId: ctx.user.userId
+                            })
+                            .returningAll()
+                            .executeTakeFirstOrThrow()
+
+                        return newVote
+                    }
+                })
         })
 })
