@@ -35,6 +35,9 @@ export const postsRouter = router({
                     .as('votes')
             ])
             .execute()
+
+        posts.sort((a, b) => b.votes.length - a.votes.length)
+
         return posts
     }),
     getById: procedure
@@ -116,6 +119,8 @@ export const postsRouter = router({
                         .as('votes')
                 ])
                 .execute()
+
+            posts.sort((a, b) => b.votes.length - a.votes.length)
 
             return posts
         }),
