@@ -26,12 +26,7 @@ export default async function PlacePage({ params }: PlaceParamsProps) {
                     </div>
 
                     {session && (
-                        <div>
-                            <PlacePageJoinButton
-                                place={place}
-                                subscribedPlaces={subscribedPlaces}
-                            />
-                        </div>
+                        <PlacePageJoinButton place={place} subscriptions={subscribedPlaces} />
                     )}
                 </div>
             </div>

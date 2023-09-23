@@ -15,20 +15,20 @@ import { cn } from '~/lib/utils'
 import { useAuth } from '~/providers/AuthProvider'
 
 interface Props {
-    places: RouterOutputs['subscriptions']['places']
+    subscriptions: RouterOutputs['subscriptions']['places']
 }
 
-export default function Sidebar({ places }: Props) {
+export default function Sidebar({ subscriptions }: Props) {
     const { user } = useAuth()
 
     return (
         <div className="sidebar-area fixed top-20 left-0 h-[calc(100vh-80px)] w-80 bg-secondary p-10 border-r z-40">
-            {user ? <AuthedSidebar places={places} /> : <NormalSidebar />}
+            {user ? <AuthedSidebar subscriptions={subscriptions} /> : <NormalSidebar />}
         </div>
     )
 }
 
-function AuthedSidebar({ places }: Props) {
+function AuthedSidebar({ subscriptions }: Props) {
     const modals = useModals()
 
     return (
@@ -47,12 +47,16 @@ function AuthedSidebar({ places }: Props) {
 
             <div className="flex flex-col gap-1 mt-5">
                 <p className="text-muted-foreground mb-2">Joined Places</p>
-                {places.length === 0 && (
+                {subscriptions.length === 0 && (
                     <p className="text-center">You have not joined any places</p>
                 )}
 
-                {places.map((place) => (
-                    <SidebarLink title={place.name} href={`/p/${place.url}`} key={place.id} />
+                {subscriptions.map((subscription) => (
+                    <SidebarLink
+                        title={subscription.place.name}
+                        href={`/p/${subscription.place.url}`}
+                        key={subscription.place.id}
+                    />
                 ))}
             </div>
         </Fragment>

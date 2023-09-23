@@ -16,9 +16,10 @@ type CreateCommentSchema = z.infer<typeof createCommentSchema>
 
 interface Props {
     postId: string
+    replyToId?: string
 }
 
-export default function CreateCommentModal({ postId }: Props) {
+export default function CreateCommentModal({ postId, replyToId }: Props) {
     const { closeAllModals } = useModals()
     const { toast } = useToast()
     const router = useRouter()
@@ -37,13 +38,15 @@ export default function CreateCommentModal({ postId }: Props) {
         createCommentMutatioin.mutate(
             {
                 postId,
-                text: data.text
+                text: data.text,
+                replyToId
             },
             {
                 onError: (err) => {
                     toast({
                         title: 'Error',
-                        description: err.message
+                        description: err.message,
+                        variant: 'destructive'
                     })
                 },
                 onSuccess: () => {
@@ -64,7 +67,7 @@ export default function CreateCommentModal({ postId }: Props) {
                 </Button>
 
                 <Button type="submit" loading={createCommentMutatioin.isLoading}>
-                    Post
+                    {typeof replyToId === 'undefined' ? 'Post' : 'Reply'}
                 </Button>
             </div>
         </form>

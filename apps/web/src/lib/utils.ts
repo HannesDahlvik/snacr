@@ -31,5 +31,6 @@ export function getInitials(name: string): string {
 
 export function createURL(str: string) {
     const word = str.replace(/å/g, 'a').replace(/ä/g, 'a').replace(/ö/g, 'o')
-    return word
+    const newUrl = word.replace(/ /g, '')
+    return newUrl
 }

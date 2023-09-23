@@ -4,7 +4,8 @@ import { useEffect, useState } from 'react'
 
 import { useRouter } from 'next/navigation'
 
-import { Place, Post, User, Vote, VoteType } from '@snacr/db'
+import { RouterOutputs } from '@snacr/api'
+import { VoteType } from '@snacr/db'
 
 import { ArrowFatDown, ArrowFatUp } from '@phosphor-icons/react'
 import { z } from 'zod'
@@ -20,11 +21,7 @@ const postVoteSchema = z.object({
 type PostVoteSchema = z.infer<typeof postVoteSchema>
 
 interface Props {
-    post: Post & {
-        place: Place
-        user: User
-        votes: Vote[]
-    }
+    post: RouterOutputs['posts']['getById']
 }
 
 export default function PostVoteButtons({ post }: Props) {
