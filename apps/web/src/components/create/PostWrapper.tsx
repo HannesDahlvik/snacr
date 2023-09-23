@@ -27,10 +27,10 @@ const tabs: TabButtonProps[] = [
 ]
 
 interface Props {
-    places: RouterOutputs['subscriptions']['places']
+    subscriptions: RouterOutputs['subscriptions']['places']
 }
 
-export default function CreatePostWrapper({ places }: Props) {
+export default function CreatePostWrapper({ subscriptions }: Props) {
     const [tabIndex, setTabIndex] = useState(0)
     const [selectOpen, setSelectOpen] = useState(false)
     const [selectedPlace, setPlace] = useState<Place>()
@@ -41,7 +41,9 @@ export default function CreatePostWrapper({ places }: Props) {
                 <PopoverTrigger asChild>
                     <Button variant="outline" role="combobox" className="w-80 mb-4 justify-between">
                         {selectedPlace
-                            ? places.find((place) => place.name === selectedPlace.name)?.name
+                            ? subscriptions.find(
+                                  (subscription) => subscription.place.name === selectedPlace.name
+                              )?.place.name
                             : 'Choose place'}
                         <CaretUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
@@ -51,23 +53,23 @@ export default function CreatePostWrapper({ places }: Props) {
                         <CommandInput placeholder="Search place" />
                         <CommandEmpty>No places found.</CommandEmpty>
                         <CommandGroup>
-                            {places.map((place) => (
+                            {subscriptions.map((subscription) => (
                                 <CommandItem
-                                    key={place.id}
+                                    key={subscription.place.id}
                                     onSelect={() => {
-                                        setPlace(place)
+                                        setPlace(subscription.place)
                                         setSelectOpen(false)
                                     }}
                                 >
                                     <Check
                                         className={cn(
                                             'mr-2 h-4 w-4',
-                                            selectedPlace?.name === place.name
+                                            selectedPlace?.name === subscription.place.name
                                                 ? 'opacity-100'
                                                 : 'opacity-0'
                                         )}
                                     />
-                                    {place.name}
+                                    {subscription.place.name}
                                 </CommandItem>
                             ))}
                         </CommandGroup>

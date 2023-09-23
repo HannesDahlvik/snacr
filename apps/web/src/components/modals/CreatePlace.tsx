@@ -37,9 +37,9 @@ export default function CreatePlaceModal() {
     })
 
     useEffect(() => {
-        const subscribe = watch((value, { name, type }) => {
+        const subscribe = watch((value, { name }) => {
             if (name === 'name') {
-                setUrl(createURL(value.name ? value.name : ''))
+                setUrl(createURL(value.name ?? ''))
             }
         })
         return () => subscribe.unsubscribe()

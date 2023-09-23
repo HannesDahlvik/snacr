@@ -1,8 +1,7 @@
-import { db } from '@snacr/db'
+import { prisma } from '@snacr/db'
 
 import { createURL } from '../lib/utils'
 import { authedProcedure, procedure, router } from '../trpc'
-import { createId, isCuid } from '@paralleldrive/cuid2'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
@@ -14,11 +13,18 @@ export const placeRouter = router({
             })
         )
         .query(async ({ input }) => {
-            const place = await db
-                .selectFrom('Place')
-                .selectAll()
-                .where('url', '=', input.url)
-                .executeTakeFirstOrThrow()
+            const place = await prisma.place
+                .findFirstOrThrow({
+                    where: {
+                        url: input.url
+                    }
+                })
+                .catch((err) => {
+                    throw new TRPCError({
+                        code: 'INTERNAL_SERVER_ERROR',
+                        message: err.message
+                    })
+                })
 
             return place
         }),
@@ -30,29 +36,41 @@ export const placeRouter = router({
             })
         )
         .mutation(async ({ ctx, input }) => {
-            const newPlace = await db
-                .transaction()
-                .execute(async (trx) => {
-                    const place = await trx
-                        .insertInto('Place')
-                        .values({
-                            id: createId(),
-                            creatorId: ctx.user.userId,
-                            description: input.description,
-                            name: input.name,
-                            url: createURL(input.name)
-                        })
-                        .returningAll()
-                        .executeTakeFirstOrThrow()
+            const newPlace = await prisma.$transaction(async (tx) => {
+                const place = await tx.place.create({
+                    data: {
+                        creatorId: ctx.user.userId,
+                        description: input.description,
+                        name: input.name,
+                        url: createURL(input.name)
+                    }
+                })
 
-                    await trx
-                        .insertInto('Subscription')
-                        .values({
-                            placeId: place.id,
-                            userId: ctx.user.userId
-                        })
-                        .executeTakeFirstOrThrow()
-                    return place
+                await tx.subscription.create({
+                    data: {
+                        placeId: place.id,
+                        userId: ctx.user.userId
+                    }
+                })
+
+                return place
+            })
+
+            return newPlace
+        }),
+    join: authedProcedure
+        .input(
+            z.object({
+                placeId: z.string().cuid()
+            })
+        )
+        .mutation(async ({ ctx, input }) => {
+            const joinedPlace = await prisma.subscription
+                .create({
+                    data: {
+                        placeId: input.placeId,
+                        userId: ctx.user.userId
+                    }
                 })
                 .catch((err) => {
                     throw new TRPCError({
@@ -61,38 +79,31 @@ export const placeRouter = router({
                     })
                 })
 
-            return newPlace
-        }),
-    join: authedProcedure
-        .input(
-            z.object({
-                placeId: z.string().refine((val) => isCuid(val))
-            })
-        )
-        .mutation(async ({ ctx, input }) => {
-            const joinedPlace = await db
-                .insertInto('Subscription')
-                .values({
-                    placeId: input.placeId,
-                    userId: ctx.user.userId
-                })
-                .returningAll()
-                .executeTakeFirstOrThrow()
-
             return joinedPlace
         }),
     leave: authedProcedure
         .input(
             z.object({
-                placeId: z.string().refine((val) => isCuid(val))
+                placeId: z.string().cuid()
             })
         )
-        .mutation(async ({ input }) => {
-            const leftPlace = await db
-                .deleteFrom('Subscription')
-                .where('Subscription.placeId', '=', input.placeId)
-                .executeTakeFirstOrThrow()
+        .mutation(async ({ ctx, input }) => {
+            const leftPlace = await prisma.subscription
+                .delete({
+                    where: {
+                        userId_placeId: {
+                            placeId: input.placeId,
+                            userId: ctx.user.userId
+                        }
+                    }
+                })
+                .catch((err) => {
+                    throw new TRPCError({
+                        code: 'INTERNAL_SERVER_ERROR',
+                        message: err.message
+                    })
+                })
 
-            return leftPlace.numDeletedRows
+            return leftPlace
         })
 })

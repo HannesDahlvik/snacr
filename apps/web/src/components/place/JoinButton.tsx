@@ -13,10 +13,10 @@ import { api } from '~/lib/api'
 
 interface Props {
     place: Place
-    subscribedPlaces?: RouterOutputs['subscriptions']['places']
+    subscriptions?: RouterOutputs['subscriptions']['places']
 }
 
-export default function PlacePageJoinButton({ place, subscribedPlaces }: Props) {
+export default function PlacePageJoinButton({ place, subscriptions }: Props) {
     const { toast } = useToast()
     const router = useRouter()
 
@@ -26,12 +26,12 @@ export default function PlacePageJoinButton({ place, subscribedPlaces }: Props) 
     const [hasJoinedPlace, setHasJoinedPlace] = useState(false)
 
     useEffect(() => {
-        if (subscribedPlaces) {
-            const found = subscribedPlaces.find((joinedPlace) => joinedPlace.id === place.id)
+        if (subscriptions) {
+            const found = subscriptions.find((subscription) => subscription.place.id === place.id)
             if (found) setHasJoinedPlace(true)
             else setHasJoinedPlace(false)
         }
-    }, [subscribedPlaces, place])
+    }, [subscriptions, place])
 
     const handleJoinPlace = () => {
         joinPlaceMutation.mutate(

@@ -1,40 +1,28 @@
-import { Place, PostType, User, Vote, VoteType, db } from '@snacr/db'
+import { PostType, VoteType, prisma } from '@snacr/db'
 
 import { authedProcedure, procedure, router } from '../trpc'
-import { createId, isCuid } from '@paralleldrive/cuid2'
-import { jsonArrayFrom, jsonObjectFrom } from 'kysely/helpers/postgres'
+import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 
 export const postsRouter = router({
     getFrontpage: procedure.query(async () => {
-        const posts = await db
-            .selectFrom('Post')
-            .selectAll()
-            .orderBy('Post.createdAt', 'desc')
-            .select((eb) => [
-                jsonObjectFrom(
-                    eb
-                        .selectFrom('Place')
-                        .selectAll('Place')
-                        .whereRef('Post.placeId', '=', 'Place.id')
-                )
-                    .$castTo<Place>()
-                    .as('place'),
-                jsonObjectFrom(
-                    eb
-                        .selectFrom('User')
-                        .selectAll('User')
-                        .whereRef('User.id', '=', 'Post.authorId')
-                )
-                    .$castTo<User>()
-                    .as('user'),
-                jsonArrayFrom(
-                    eb.selectFrom('Vote').selectAll('Vote').whereRef('Vote.postId', '=', 'Post.id')
-                )
-                    .$castTo<Vote[]>()
-                    .as('votes')
-            ])
-            .execute()
+        const posts = await prisma.post
+            .findMany({
+                orderBy: {
+                    createdAt: 'desc'
+                },
+                include: {
+                    place: true,
+                    user: true,
+                    votes: true
+                }
+            })
+            .catch((err) => {
+                throw new TRPCError({
+                    code: 'INTERNAL_SERVER_ERROR',
+                    message: err.message
+                })
+            })
 
         posts.sort((a, b) => b.votes.length - a.votes.length)
 
@@ -43,82 +31,57 @@ export const postsRouter = router({
     getById: procedure
         .input(
             z.object({
-                postId: z.string().refine((val) => isCuid(val))
+                postId: z.string().cuid()
             })
         )
         .query(async ({ input }) => {
-            const post = await db
-                .selectFrom('Post')
-                .selectAll()
-                .where('Post.id', '=', input.postId)
-                .select((eb) => [
-                    jsonObjectFrom(
-                        eb
-                            .selectFrom('Place')
-                            .selectAll('Place')
-                            .whereRef('Post.placeId', '=', 'Place.id')
-                    )
-                        .$castTo<Place>()
-                        .as('place'),
-                    jsonObjectFrom(
-                        eb
-                            .selectFrom('User')
-                            .selectAll('User')
-                            .whereRef('User.id', '=', 'Post.authorId')
-                    )
-                        .$castTo<User>()
-                        .as('user'),
-                    jsonArrayFrom(
-                        eb
-                            .selectFrom('Vote')
-                            .selectAll('Vote')
-                            .whereRef('Vote.postId', '=', 'Post.id')
-                    )
-                        .$castTo<Vote[]>()
-                        .as('votes')
-                ])
-                .executeTakeFirstOrThrow()
+            const post = prisma.post
+                .findFirstOrThrow({
+                    where: {
+                        id: input.postId
+                    },
+                    include: {
+                        place: true,
+                        user: true,
+                        votes: true
+                    }
+                })
+                .catch((err) => {
+                    throw new TRPCError({
+                        code: 'INTERNAL_SERVER_ERROR',
+                        message: err.message
+                    })
+                })
+
             return post
         }),
     getByPlaceId: procedure
         .input(
             z.object({
-                placeId: z.string().refine((val) => isCuid(val))
+                placeId: z.string().cuid()
             })
         )
         .query(async ({ input }) => {
-            const posts = await db
-                .selectFrom('Post')
-                .selectAll()
-                .where('Post.placeId', '=', input.placeId)
-                .orderBy('Post.createdAt', 'desc')
-                .select((eb) => [
-                    jsonObjectFrom(
-                        eb
-                            .selectFrom('Place')
-                            .selectAll('Place')
-                            .whereRef('Post.placeId', '=', 'Place.id')
-                    )
-                        .$castTo<Place>()
-                        .as('place'),
-                    jsonObjectFrom(
-                        eb
-                            .selectFrom('User')
-                            .selectAll('User')
-                            .whereRef('User.id', '=', 'Post.authorId')
-                    )
-                        .$castTo<User>()
-                        .as('user'),
-                    jsonArrayFrom(
-                        eb
-                            .selectFrom('Vote')
-                            .selectAll('Vote')
-                            .whereRef('Vote.postId', '=', 'Post.id')
-                    )
-                        .$castTo<Vote[]>()
-                        .as('votes')
-                ])
-                .execute()
+            const posts = await prisma.post
+                .findMany({
+                    where: {
+                        placeId: input.placeId
+                    },
+                    orderBy: {
+                        createdAt: 'desc'
+                    },
+                    include: {
+                        place: true,
+                        user: true,
+                        votes: true
+                    }
+                })
+                .catch((err) => {
+                    throw new TRPCError({
+                        code: 'INTERNAL_SERVER_ERROR',
+                        message: err.message
+                    })
+                })
 
             posts.sort((a, b) => b.votes.length - a.votes.length)
 
@@ -128,78 +91,91 @@ export const postsRouter = router({
         .input(
             z.object({
                 body: z.string().optional(),
-                placeId: z.string().refine((val) => isCuid(val)),
+                placeId: z.string().cuid(),
                 title: z.string().min(3).max(300),
                 type: z.custom<PostType>()
             })
         )
         .mutation(async ({ ctx, input }) => {
-            const newPlace = await db
-                .insertInto('Post')
-                .values({
-                    id: createId(),
-                    authorId: ctx.user.userId,
-                    body: input.body,
-                    placeId: input.placeId,
-                    title: input.title,
-                    type: input.type
+            const newPlace = await prisma.post
+                .create({
+                    data: {
+                        authorId: ctx.user.userId,
+                        body: input.body,
+                        placeId: input.placeId,
+                        title: input.title,
+                        type: input.type
+                    }
                 })
-                .returningAll()
-                .executeTakeFirst()
+                .catch((err) => {
+                    throw new TRPCError({
+                        code: 'INTERNAL_SERVER_ERROR',
+                        message: err.message
+                    })
+                })
 
             return newPlace
         }),
     vote: authedProcedure
         .input(
             z.object({
-                postId: z.string().refine((val) => isCuid(val)),
+                postId: z.string().cuid(),
                 type: z.custom<VoteType>()
             })
         )
         .mutation(async ({ ctx, input }) => {
-            await db
-                .selectFrom('Vote')
-                .selectAll()
-                .where('Vote.postId', '=', input.postId)
-                .where('Vote.userId', '=', ctx.user.userId)
-                .executeTakeFirst()
+            await prisma.vote
+                .findFirst({
+                    where: {
+                        postId: input.postId,
+                        userId: ctx.user.userId
+                    }
+                })
                 .then(async (vote) => {
                     if (vote && vote.userId === ctx.user.userId) {
                         if (vote.type === input.type) {
-                            const removedVote = await db
-                                .deleteFrom('Vote')
-                                .where('Vote.postId', '=', input.postId)
-                                .where('Vote.userId', '=', ctx.user.userId)
-                                .executeTakeFirstOrThrow()
+                            const removedVote = await prisma.vote.delete({
+                                where: {
+                                    userId_postId: {
+                                        postId: input.postId,
+                                        userId: ctx.user.userId
+                                    }
+                                }
+                            })
 
                             return removedVote
-                        } else if (vote.type !== input.type) {
-                            const updatedVote = await db
-                                .updateTable('Vote')
-                                .set({
+                        } else {
+                            const updatedVote = await prisma.vote.update({
+                                data: {
                                     type: vote.type === 'DOWN' ? 'UP' : 'DOWN'
-                                })
-                                .where('Vote.postId', '=', input.postId)
-                                .where('Vote.userId', '=', ctx.user.userId)
-                                .executeTakeFirstOrThrow()
+                                },
+                                where: {
+                                    userId_postId: {
+                                        postId: input.postId,
+                                        userId: ctx.user.userId
+                                    }
+                                }
+                            })
 
                             return updatedVote
                         }
-
-                        return vote
                     } else {
-                        const newVote = await db
-                            .insertInto('Vote')
-                            .values({
+                        const newVote = await prisma.vote.create({
+                            data: {
                                 postId: input.postId,
                                 type: input.type,
                                 userId: ctx.user.userId
-                            })
-                            .returningAll()
-                            .executeTakeFirstOrThrow()
+                            }
+                        })
 
                         return newVote
                     }
+                })
+                .catch((err) => {
+                    throw new TRPCError({
+                        code: 'INTERNAL_SERVER_ERROR',
+                        message: err.message
+                    })
                 })
         })
 })

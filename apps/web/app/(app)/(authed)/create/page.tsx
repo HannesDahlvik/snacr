@@ -23,7 +23,7 @@ export default async function AuthedCreatePage() {
 
                         <Separator className="my-4" />
 
-                        <CreatePostWrapper places={subscribedPlaces} />
+                        <CreatePostWrapper subscriptions={subscribedPlaces} />
                     </Fragment>
                 )}
             </div>
