@@ -2,9 +2,10 @@ import { Fragment } from 'react'
 
 import Link from 'next/link'
 
-import { ArrowLeft } from '@phosphor-icons/react'
+import parse from 'html-react-parser'
 import PostPageCommentsSidebar from '~/components/post/CommentsSidebar'
 import PostVoteButtons from '~/components/post/VoteButtons'
+import { Separator } from '~/components/ui'
 import { caller } from '~/lib/caller'
 import { PlacePostParamsProps } from '~/types'
 
@@ -16,6 +17,8 @@ export default async function PlacePostPage({ params }: PlacePostParamsProps) {
         postId: params.id
     })
 
+    const body = post.body ? parse(post.body) : null
+
     return (
         <Fragment>
             <div className="absolute-center flex flex-col w-center py-8 pb-24">
@@ -23,10 +26,11 @@ export default async function PlacePostPage({ params }: PlacePostParamsProps) {
                     p/{post.place.url}
                 </Link>
 
-                <hr className="my-2" />
+                <Separator className="my-2" />
 
-                <h3 className="mb-4">{post.title}</h3>
-                <p>{post.body}</p>
+                <h2 className="mb-4">{post.title}</h2>
+
+                <div>{body}</div>
             </div>
 
             <div className="!fixed absolute-center bottom-0 h-16 flex justify-center items-center w-full bg-secondary/75 border-t backdrop-blur">
