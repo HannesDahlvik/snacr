@@ -13,8 +13,8 @@ export default async function PlacePage({ params }: PlaceParamsProps) {
     const posts = await caller.posts.getByPlaceId({
         placeId: place.id
     })
-    let subscribedPlaces: RouterOutputs['subscriptions']['places'] | undefined
-    if (session) subscribedPlaces = await caller.subscriptions.places()
+    let subscriptions: RouterOutputs['subscriptions']['places'] | undefined
+    if (session) subscriptions = await caller.subscriptions.places()
 
     return (
         <div className="flex flex-col items-center">
@@ -25,9 +25,7 @@ export default async function PlacePage({ params }: PlaceParamsProps) {
                         <p className="text-muted-foreground text-sm">p/{place.url}</p>
                     </div>
 
-                    {session && (
-                        <PlacePageJoinButton place={place} subscriptions={subscribedPlaces} />
-                    )}
+                    {session && <PlacePageJoinButton place={place} subscriptions={subscriptions} />}
                 </div>
             </div>
 

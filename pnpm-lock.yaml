@@ -153,6 +153,9 @@ importers:
       '@snacr/api':
         specifier: workspace:^
         version: link:../../packages/api
+      '@snacr/dayjs':
+        specifier: workspace:^
+        version: link:../../packages/dayjs
       '@snacr/db':
         specifier: workspace:^
         version: link:../../packages/db
@@ -295,6 +298,12 @@ importers:
         version: 7.33.0(eslint@8.45.0)
 
   packages/config/tsconfig: {}
+
+  packages/dayjs:
+    dependencies:
+      dayjs:
+        specifier: ^1.11.10
+        version: 1.11.10
 
   packages/db:
     dependencies:
@@ -5314,8 +5323,8 @@ packages:
     resolution: {integrity: sha512-sdQSFB7+llfUcQHUQO3+B8ERRj0Oa4w9POWMI/puGtuf7gFywGmkaLCElnudfTiKZV+NvHqL0ifzdrI8Ro7ESA==}
     dev: false
 
-  /dayjs@1.11.9:
-    resolution: {integrity: sha512-QvzAURSbQ0pKdIye2txOzNaHmxtUBXerpY0FJsFXUMKbIZeFm5ht1LS/jFsrncjnmtv8HsG0W2g6c0zUjZWmpA==}
+  /dayjs@1.11.10:
+    resolution: {integrity: sha512-vjAczensTgRcqDERK0SR2XMwsF/tSvnvlv6VcF2GIhg6Sx4yOIt/irsr1RDJsKiIyBzJDpCoXiWWq28MqH2cnQ==}
 
   /debug@2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
@@ -7659,7 +7668,7 @@ packages:
     hasBin: true
     dependencies:
       ansi-fragments: 0.2.1
-      dayjs: 1.11.9
+      dayjs: 1.11.10
       yargs: 15.4.1
 
   /loose-envify@1.4.0:

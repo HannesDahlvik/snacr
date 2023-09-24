@@ -20,6 +20,7 @@
         "@radix-ui/react-slot": "^1.0.2",
         "@radix-ui/react-toast": "^1.1.4",
         "@snacr/api": "workspace:^",
+        "@snacr/dayjs": "workspace:^",
         "@snacr/db": "workspace:^",
         "@tanstack/react-query": "^4.32.0",
         "@trpc/client": "^10.35.0",
