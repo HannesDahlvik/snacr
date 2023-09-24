@@ -1,3 +1,5 @@
+import { dayjs } from '@snacr/dayjs'
+
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
 
@@ -32,5 +34,9 @@ export function getInitials(name: string): string {
 export function createURL(str: string) {
     const word = str.replace(/å/g, 'a').replace(/ä/g, 'a').replace(/ö/g, 'o')
     const newUrl = word.replace(/ /g, '')
-    return newUrl
+    return 'p/' + newUrl
+}
+
+export function timeAgo(date: Date) {
+    return dayjs(date).fromNow()
 }

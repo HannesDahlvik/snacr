@@ -23,7 +23,7 @@ export default function CreatePlaceModal() {
     const { toast } = useToast()
     const router = useRouter()
 
-    const [url, setUrl] = useState('')
+    const [url, setUrl] = useState('p/')
 
     const createPlaceMutation = api.place.create.useMutation()
 

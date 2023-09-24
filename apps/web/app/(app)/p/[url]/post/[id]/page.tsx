@@ -1,5 +1,8 @@
 import { Fragment } from 'react'
 
+import Link from 'next/link'
+
+import { ArrowLeft } from '@phosphor-icons/react'
 import PostPageCommentsSidebar from '~/components/post/CommentsSidebar'
 import PostVoteButtons from '~/components/post/VoteButtons'
 import { caller } from '~/lib/caller'
@@ -16,6 +19,12 @@ export default async function PlacePostPage({ params }: PlacePostParamsProps) {
     return (
         <Fragment>
             <div className="absolute-center flex flex-col w-center py-8 pb-24">
+                <Link href={`/p/${post.place.url}`} className="text-sm hover:underline">
+                    p/{post.place.url}
+                </Link>
+
+                <hr className="my-2" />
+
                 <h3 className="mb-4">{post.title}</h3>
                 <p>{post.body}</p>
             </div>

@@ -4,6 +4,7 @@ import { Place, Post, User, Vote } from '@snacr/db'
 
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../ui'
 import PostVoteButtons from './VoteButtons'
+import { timeAgo } from '~/lib/utils'
 
 interface Props {
     post: Post & {
@@ -22,7 +23,9 @@ export default function PostCard({ post }: Props) {
                         p/{post.place.url}
                     </Link>
                     <p>-</p>
-                    <p className="text-muted-foreground text-xs">Posted by {post.user.username}</p>
+                    <p className="text-muted-foreground text-xs">
+                        Posted by {post.user.username} {timeAgo(post.createdAt)}
+                    </p>
                 </div>
 
                 <Link href={`/p/${post.place.url}/post/${post.id}`}>

@@ -1,0 +1,9 @@
+{
+    "name": "@snacr/dayjs",
+    "version": "0.4.1",
+    "main": "./index.ts",
+    "private": true,
+    "dependencies": {
+        "dayjs": "^1.11.10"
+    }
+}
