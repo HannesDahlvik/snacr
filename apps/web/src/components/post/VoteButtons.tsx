@@ -89,7 +89,7 @@ export default function PostVoteButtons({ post }: Props) {
             >
                 <ArrowFatUp
                     className={cn(
-                        'cursor-pointer',
+                        'cursor-pointer hover:text-blue-500',
                         isVoteAuthor && isUpvote ? 'text-blue-500' : ''
                     )}
                     size={20}
@@ -109,7 +109,7 @@ export default function PostVoteButtons({ post }: Props) {
             >
                 <ArrowFatDown
                     className={cn(
-                        'cursor-pointer',
+                        'cursor-pointer hover:text-red-500',
                         isVoteAuthor && !isUpvote ? 'text-red-500' : ''
                     )}
                     size={20}

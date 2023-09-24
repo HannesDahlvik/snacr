@@ -70,7 +70,7 @@ export default function PostCommentVote({ comment, type, isUpvote, isVoteAuthor 
             >
                 <ArrowFatUp
                     className={cn(
-                        'cursor-pointer',
+                        'cursor-pointer hover:text-blue-500',
                         isVoteAuthor && isUpvote ? 'text-blue-500' : ''
                     )}
                     size={20}
@@ -90,7 +90,7 @@ export default function PostCommentVote({ comment, type, isUpvote, isVoteAuthor 
             >
                 <ArrowFatDown
                     className={cn(
-                        'cursor-pointer',
+                        'cursor-pointer hover:text-red-500',
                         isVoteAuthor && !isUpvote ? 'text-red-500' : ''
                     )}
                     size={20}
