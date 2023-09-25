@@ -30,7 +30,7 @@ export default async function PlacePostPage({ params }: PlacePostParamsProps) {
 
                 <h2 className="mb-4">{post.title}</h2>
 
-                <div>{body}</div>
+                <div className="post-content">{body}</div>
             </div>
 
             <div className="!fixed absolute-center bottom-0 h-16 flex justify-center items-center w-full bg-secondary/75 border-t backdrop-blur">

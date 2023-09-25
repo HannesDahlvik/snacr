@@ -42,7 +42,7 @@ export default function CreateTextPost({ place }: Props) {
     const editor = useEditor({
         editorProps: {
             attributes: {
-                class: 'p-3 outline-none'
+                class: 'p-3 outline-none min-h-[100px]'
             }
         },
         extensions: [
@@ -115,8 +115,12 @@ export default function CreateTextPost({ place }: Props) {
                 {...register('title')}
             />
 
-            <Label className="flex items-center">Text (optional)</Label>
-            <RichTextEditor editor={editor} />
+            <div className="flex flex-col items-start gap-1 w-full">
+                <div className="flex justify-between w-full mb-1">
+                    <Label>Text (optional)</Label>
+                </div>
+                <RichTextEditor editor={editor} />
+            </div>
 
             <div>
                 <Button type="submit" loading={createPostMutation.isLoading}>

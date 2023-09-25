@@ -38,7 +38,7 @@ export default function PostCard({ post }: Props) {
 
             {post.body && (
                 <CardContent>
-                    <div className="line-clamp-6">{body}</div>
+                    <div className="post-content line-clamp-6">{body}</div>
                 </CardContent>
             )}
 
