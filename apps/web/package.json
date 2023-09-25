@@ -1,6 +1,6 @@
 {
     "name": "@snacr/web",
-    "version": "0.4.1",
+    "version": "0.5.0",
     "scripts": {
         "dev": "pnpm with-env next dev",
         "build": "pnpm with-env next build",
@@ -23,12 +23,17 @@
         "@snacr/dayjs": "workspace:^",
         "@snacr/db": "workspace:^",
         "@tanstack/react-query": "^4.32.0",
+        "@tiptap/extension-link": "^2.1.11",
+        "@tiptap/react": "^2.1.11",
+        "@tiptap/starter-kit": "^2.1.11",
         "@trpc/client": "^10.35.0",
         "@trpc/react-query": "^10.35.0",
         "@trpc/server": "^10.35.0",
+        "@vercel/analytics": "^1.0.2",
         "class-variance-authority": "^0.7.0",
         "clsx": "^2.0.0",
         "cmdk": "^0.2.0",
+        "html-react-parser": "^4.2.2",
         "next": "13.5.2",
         "next-themes": "^0.2.1",
         "react": "18.2.0",
@@ -41,6 +46,7 @@
     },
     "devDependencies": {
         "@snacr/tsconfig": "workspace:^",
+        "@tailwindcss/typography": "^0.5.10",
         "@types/node": "20.4.4",
         "@types/react": "18.2.15",
         "@types/react-dom": "18.2.7",

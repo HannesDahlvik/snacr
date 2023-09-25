@@ -3,6 +3,6 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 
 dayjs.extend(relativeTime)
 
-type Dayjs = dayjs.Dayjs
+export type Dayjs = dayjs.Dayjs
 
-export { dayjs, Dayjs }
+export { dayjs }

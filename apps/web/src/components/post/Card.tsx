@@ -4,6 +4,7 @@ import { Place, Post, User, Vote } from '@snacr/db'
 
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../ui'
 import PostVoteButtons from './VoteButtons'
+import parse from 'html-react-parser'
 import { timeAgo } from '~/lib/utils'
 
 interface Props {
@@ -15,6 +16,8 @@ interface Props {
 }
 
 export default function PostCard({ post }: Props) {
+    const body = post.body ? parse(post.body) : null
+
     return (
         <Card className="hover:border-primary/50">
             <CardHeader>
@@ -35,7 +38,7 @@ export default function PostCard({ post }: Props) {
 
             {post.body && (
                 <CardContent>
-                    <p className="line-clamp-6">{post.body}</p>
+                    <div className="post-content line-clamp-6">{body}</div>
                 </CardContent>
             )}
 

@@ -2,17 +2,27 @@
 
 import { useRouter } from 'next/navigation'
 
-import { Button, Textarea } from '../ui'
-import { z } from 'zod'
+import { Button } from '../ui'
+import RichTextEditor from '../ui/rich-text-editor'
+import Blockquote from '@tiptap/extension-blockquote'
+import Bold from '@tiptap/extension-bold'
+import BulletList from '@tiptap/extension-bullet-list'
+import CodeInline from '@tiptap/extension-code'
+import CodeBlockExt from '@tiptap/extension-code-block'
+import Document from '@tiptap/extension-document'
+import Heading from '@tiptap/extension-heading'
+import Italic from '@tiptap/extension-italic'
+import LinkExt from '@tiptap/extension-link'
+import ListItem from '@tiptap/extension-list-item'
+import OrderedList from '@tiptap/extension-ordered-list'
+import Paragraph from '@tiptap/extension-paragraph'
+import Strikethrough from '@tiptap/extension-strike'
+import Text from '@tiptap/extension-text'
+import { useEditor } from '@tiptap/react'
 import { useModals } from '~/hooks/useModals'
 import { useToast } from '~/hooks/useToast'
 import { useZodForm } from '~/hooks/useZodForm'
 import { api } from '~/lib/api'
-
-const createCommentSchema = z.object({
-    text: z.string().min(1)
-})
-type CreateCommentSchema = z.infer<typeof createCommentSchema>
 
 interface Props {
     postId: string
@@ -24,21 +34,44 @@ export default function CreateCommentModal({ postId, replyToId }: Props) {
     const { toast } = useToast()
     const router = useRouter()
 
+    const editor = useEditor({
+        editorProps: {
+            attributes: {
+                class: 'p-3 outline-none min-h-[100px]'
+            }
+        },
+        extensions: [
+            Blockquote,
+            Bold,
+            BulletList,
+            CodeInline,
+            CodeBlockExt,
+            Document,
+            Heading,
+            Italic,
+            LinkExt,
+            ListItem,
+            OrderedList,
+            Paragraph,
+            Strikethrough,
+            Text
+        ]
+    })
+
     const createCommentMutatioin = api.comments.create.useMutation()
 
     const {
         handleSubmit,
-        register,
         formState: { errors }
-    } = useZodForm({
-        schema: createCommentSchema
-    })
+    } = useZodForm()
 
-    const handleCreateComment = (data: CreateCommentSchema) => {
+    const handleCreateComment = () => {
+        if (!editor) return
+
         createCommentMutatioin.mutate(
             {
                 postId,
-                text: data.text,
+                text: editor.getHTML(),
                 replyToId
             },
             {
@@ -59,7 +92,7 @@ export default function CreateCommentModal({ postId, replyToId }: Props) {
 
     return (
         <form className="flex flex-col gap-4 w-full" onSubmit={handleSubmit(handleCreateComment)}>
-            <Textarea error={errors.text?.message} {...register('text')} />
+            <RichTextEditor editor={editor} />
 
             <div className="grid grid-cols-2 gap-4 w-full">
                 <Button type="button" variant="outline" onClick={closeAllModals}>

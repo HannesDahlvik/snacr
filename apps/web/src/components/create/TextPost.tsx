@@ -4,15 +4,30 @@ import { useRouter } from 'next/navigation'
 
 import { Place } from '@snacr/db'
 
-import { Button, Input, Textarea } from '../ui'
+import { Button, Input, Label } from '../ui'
+import RichTextEditor from '../ui/rich-text-editor'
+import Blockquote from '@tiptap/extension-blockquote'
+import Bold from '@tiptap/extension-bold'
+import BulletList from '@tiptap/extension-bullet-list'
+import CodeInline from '@tiptap/extension-code'
+import CodeBlockExt from '@tiptap/extension-code-block'
+import Document from '@tiptap/extension-document'
+import Heading from '@tiptap/extension-heading'
+import Italic from '@tiptap/extension-italic'
+import LinkExt from '@tiptap/extension-link'
+import ListItem from '@tiptap/extension-list-item'
+import OrderedList from '@tiptap/extension-ordered-list'
+import Paragraph from '@tiptap/extension-paragraph'
+import Strikethrough from '@tiptap/extension-strike'
+import Text from '@tiptap/extension-text'
+import { useEditor } from '@tiptap/react'
 import { z } from 'zod'
 import { useToast } from '~/hooks/useToast'
 import { useZodForm } from '~/hooks/useZodForm'
 import { api } from '~/lib/api'
 
 const textPostSchema = z.object({
-    title: z.string().min(3).max(300),
-    body: z.string().optional()
+    title: z.string().min(3).max(300)
 })
 type TextPostSchema = z.infer<typeof textPostSchema>
 
@@ -23,6 +38,30 @@ interface Props {
 export default function CreateTextPost({ place }: Props) {
     const { toast } = useToast()
     const router = useRouter()
+
+    const editor = useEditor({
+        editorProps: {
+            attributes: {
+                class: 'p-3 outline-none min-h-[100px]'
+            }
+        },
+        extensions: [
+            Blockquote,
+            Bold,
+            BulletList,
+            CodeInline,
+            CodeBlockExt,
+            Document,
+            Heading,
+            Italic,
+            LinkExt,
+            ListItem,
+            OrderedList,
+            Paragraph,
+            Strikethrough,
+            Text
+        ]
+    })
 
     const createPostMutation = api.posts.create.useMutation()
 
@@ -40,9 +79,11 @@ export default function CreateTextPost({ place }: Props) {
                 title: 'Select a place'
             })
 
+        if (!editor) return
+
         createPostMutation.mutate(
             {
-                body: data.body,
+                body: editor.getHTML(),
                 placeId: place?.id,
                 title: data.title,
                 type: 'text'
@@ -74,7 +115,12 @@ export default function CreateTextPost({ place }: Props) {
                 {...register('title')}
             />
 
-            <Textarea label="Text" error={errors.body?.message} {...register('body')} />
+            <div className="flex flex-col items-start gap-1 w-full">
+                <div className="flex justify-between w-full mb-1">
+                    <Label>Text (optional)</Label>
+                </div>
+                <RichTextEditor editor={editor} />
+            </div>
 
             <div>
                 <Button type="submit" loading={createPostMutation.isLoading}>

@@ -30,7 +30,7 @@
 
         --border: 190, 190, 190;
         --input: 190, 190, 190;
-        --ring: 150, 150, 150;
+        --ring: 180, 180, 180;
 
         --radius: 0.5rem;
     }
@@ -105,6 +105,44 @@
     }
     p {
         @apply leading-5;
+    }
+
+    .editor-content,
+    .tiptap {
+        p {
+            line-height: normal;
+        }
+
+        p:has(code) {
+            code {
+                @apply bg-ring py-0.5 px-1 rounded-md text-sm;
+            }
+        }
+
+        pre:has(code) {
+            @apply bg-ring my-2 p-3 rounded-md;
+        }
+
+        a {
+            @apply text-blue-600 dark:text-blue-400;
+        }
+
+        ul,
+        ol {
+            @apply px-6 py-2;
+        }
+
+        ul {
+            list-style: disc;
+        }
+
+        ol {
+            list-style: decimal;
+        }
+
+        blockquote {
+            @apply my-2 ml-3 pl-3 border-l-4 border-l-ring;
+        }
     }
 }
 

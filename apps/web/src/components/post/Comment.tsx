@@ -5,6 +5,7 @@ import { RouterOutputs, Session } from '@snacr/api'
 import PostCommentVote from './CommentVote'
 import PostCreateReplyComment from './CreateReplyComment'
 import PostDeleteCommentButton from './DeleteCommentButton'
+import parse from 'html-react-parser'
 
 interface Props {
     postId: string
@@ -20,6 +21,8 @@ export default function PostComment({ comment, session, postId }: Props) {
     let votes = 0
     comment.votes.map((vote) => (vote.type === 'UP' ? votes++ : votes--))
 
+    const text = comment.text ? parse(comment.text) : null
+
     return (
         <Fragment>
             <div className="px-4 pb-4">
@@ -30,7 +33,7 @@ export default function PostComment({ comment, session, postId }: Props) {
                     )}
                 </div>
 
-                <p>{comment.text}</p>
+                <div className="editor-content">{text}</div>
 
                 <div className="flex items-center gap-2 mt-2">
                     <div className="grid grid-cols-[20px_20px_20px] items-center gap-2 text-center">
