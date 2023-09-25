@@ -107,7 +107,7 @@
         @apply leading-5;
     }
 
-    .post-content,
+    .editor-content,
     .tiptap {
         p {
             line-height: normal;

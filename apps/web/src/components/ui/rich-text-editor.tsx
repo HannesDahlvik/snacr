@@ -27,6 +27,17 @@ interface Props {
 export default function RichTextEditor({ editor }: Props) {
     const [link, setLink] = useState('')
 
+    const handleAddLink = () => {
+        editor
+            ?.chain()
+            .focus()
+            .toggleLink({
+                href: link
+            })
+            .run()
+        setLink('')
+    }
+
     if (!editor) {
         return null
     }
@@ -71,19 +82,7 @@ export default function RichTextEditor({ editor }: Props) {
                             onChange={(ev) => setLink(ev.target.value)}
                         />
 
-                        <Button
-                            className="mt-2"
-                            type="button"
-                            onClick={() =>
-                                editor
-                                    .chain()
-                                    .focus()
-                                    .toggleLink({
-                                        href: link
-                                    })
-                                    .run()
-                            }
-                        >
+                        <Button className="mt-2" type="button" onClick={handleAddLink}>
                             Insert
                         </Button>
                     </PopoverContent>
