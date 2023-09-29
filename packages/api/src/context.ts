@@ -1,9 +1,11 @@
+import { DeviceType } from './trpc'
 import { FetchCreateContextFnOptions } from '@trpc/server/adapters/fetch'
 
 export async function createContext(
     opts:
         | {
               type: 'rsc'
+              device: DeviceType
           }
         | (FetchCreateContextFnOptions & {
               type: 'api'
@@ -11,7 +13,8 @@ export async function createContext(
 ) {
     if (opts.type === 'rsc') {
         return {
-            type: opts.type
+            type: opts.type,
+            device: opts.device
         }
     }
     return {

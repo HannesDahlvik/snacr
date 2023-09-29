@@ -11,8 +11,7 @@ const handler = (request: Request) => {
             return {
                 type: 'api',
                 req: opts.req,
-                resHeaders: opts.resHeaders,
-                device: 'web'
+                resHeaders: opts.resHeaders
             }
         }
     })

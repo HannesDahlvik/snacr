@@ -28,7 +28,7 @@ export default function TrpcProvider({ children }: PropsWithChildren) {
                     url: `${getBaseUrl()}/api/trpc`,
                     headers() {
                         return {
-                            Device: 'web'
+                            device: 'web'
                         }
                     },
                     fetch: async (input, init?) => {

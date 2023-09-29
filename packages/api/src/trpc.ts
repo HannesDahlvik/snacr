@@ -8,8 +8,8 @@ import { Session } from 'lucia'
 import superjson from 'superjson'
 import { z } from 'zod'
 
-const deviceTypes = z.enum(['web', 'mobile'])
-type DeviceType = z.infer<typeof deviceTypes>
+export const deviceTypes = z.enum(['web', 'mobile'])
+export type DeviceType = z.infer<typeof deviceTypes>
 
 const t = initTRPC.context<typeof createContext>().create({
     transformer: superjson
@@ -18,12 +18,12 @@ const t = initTRPC.context<typeof createContext>().create({
 export const router = t.router
 export const procedure = t.procedure.use(async ({ ctx, next }) => {
     const device = ctx.req?.headers.get('device')
-    const checkDevice = deviceTypes.safeParse(device)
+    const checkDevice = deviceTypes.safeParse(device ?? ctx.device)
 
     if (checkDevice.success) {
         return next({
             ctx: {
-                device: device as DeviceType
+                device: checkDevice.data as DeviceType
             }
         })
     } else {
