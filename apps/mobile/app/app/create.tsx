@@ -1,11 +1,11 @@
-import { Button, Text } from 'react-native'
+import { Text } from 'react-native'
 
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-export default function AppIndexPage() {
+export default function AppCreatePage() {
     return (
         <SafeAreaView className="flex-1 flex-col items-center justify-center gap-3">
-            <Text>AppIndexPage</Text>
+            <Text>AppCreatePage</Text>
         </SafeAreaView>
     )
 }
