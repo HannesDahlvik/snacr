@@ -13,9 +13,8 @@ import { Text } from 'react-native'
 import { User } from '@snacr/db'
 
 import { api } from '../lib/api'
-import { remove } from '../lib/store'
-import { store } from '../stores'
-import { useHookstate } from '@hookstate/core'
+import { SecureStore } from '../lib/store'
+import { SplashScreen, router } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 interface AuthContextType {
@@ -30,36 +29,29 @@ export const AuthContext = createContext<AuthContextType | null>(null)
 export default function AuthProvider({ children }: PropsWithChildren) {
     const authVerify = api.auth.verify.useMutation()
 
-    const authSessionId = useHookstate(store.auth.sessionId)
-
     const [sessionId, setSessionId] = useState<string | null>(null)
     const [user, setUser] = useState<User | null>(null)
 
     useEffect(() => {
-        if (authSessionId.get())
-            authVerify.mutate(undefined, {
-                onError: (err) => {
-                    console.error(err)
-                },
-                onSuccess: (data) => {
-                    if (!data) {
-                        setSessionId(null)
-                        setUser(null)
-                        store.auth.set({
-                            sessionId: null,
-                            user: null
-                        })
-                        return
-                    }
-
-                    setSessionId(data.sessionId)
-                    setUser(data.user)
-                    store.auth.set({
-                        sessionId: data.sessionId,
-                        user: data.user
-                    })
+        authVerify.mutate(undefined, {
+            onError: (err) => {
+                console.error(err)
+            },
+            onSuccess: (data) => {
+                if (!data) {
+                    setSessionId(null)
+                    setUser(null)
+                    return
                 }
-            })
+
+                setSessionId(data.sessionId)
+                setUser(data.user)
+                router.replace('/app')
+            },
+            onSettled: () => {
+                SplashScreen.hideAsync()
+            }
+        })
     }, [])
 
     if (authVerify.isError)
@@ -100,20 +92,24 @@ export function useAuth() {
             onSuccess: (data) => console.log(data)
         })
 
-        ctx?.setSessionId(null)
-        ctx?.setUser(null)
-        await remove('sessionId')
-        store.auth.set({
-            sessionId: null,
-            user: null
-        })
+        setAuth(null, null)
+    }
+
+    const setAuth = async (sessionId: string | null, user: User | null) => {
+        ctx?.setSessionId(sessionId)
+        ctx?.setUser(user)
+
+        if (sessionId === null) {
+            await SecureStore.remove('sessionId')
+        } else {
+            await SecureStore.save('sessionId', sessionId)
+        }
     }
 
     return {
         logout,
+        setAuth,
         sessionId: ctx?.sessionId,
-        setSessionId: ctx?.setSessionId,
-        user: ctx?.user,
-        setUser: ctx?.setUser
+        user: ctx?.user
     }
 }

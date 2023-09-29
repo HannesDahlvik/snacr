@@ -35,12 +35,12 @@ export const authRouter = router({
                     })
                 })
 
-            const authRequest = auth.handleRequest({
-                request: ctx.req as NextRequest,
-                cookies
-            })
-
             if (ctx.device === 'web') {
+                const authRequest = auth.handleRequest({
+                    request: ctx.req as NextRequest,
+                    cookies
+                })
+
                 authRequest.setSession(session)
                 return session.user
             } else if (ctx.device === 'mobile') {
@@ -102,12 +102,13 @@ export const authRouter = router({
                         message: err.message
                     })
                 })
-            const authRequest = auth.handleRequest({
-                request: ctx.req as NextRequest,
-                cookies
-            })
 
             if (ctx.device === 'web') {
+                const authRequest = auth.handleRequest({
+                    request: ctx.req as NextRequest,
+                    cookies
+                })
+
                 authRequest.setSession(session)
                 return session.user
             } else if (ctx.device === 'mobile') {

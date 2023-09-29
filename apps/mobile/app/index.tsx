@@ -1,14 +1,16 @@
 import { Button, Text, View } from 'react-native'
 
 import { useAuth } from '../providers/AuthProvider'
-import { useRouter } from 'expo-router'
+import { Redirect, useRouter } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 export default function IndexPage() {
     const router = useRouter()
     const { user } = useAuth()
 
-    if (user) router.replace('/authed')
+    if (user) {
+        return <Redirect href="/app" />
+    }
 
     return (
         <SafeAreaView className="flex flex-col items-center justify-center pt-60">
@@ -26,7 +28,7 @@ export default function IndexPage() {
                 </View>
 
                 <View className="mb-2">
-                    <Button title="Authed page" onPress={() => router.push('/authed')} />
+                    <Button title="App page" onPress={() => router.push('/app')} />
                 </View>
             </View>
         </SafeAreaView>

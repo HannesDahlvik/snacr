@@ -13,3 +13,9 @@ export async function getValue(key: string) {
 export async function remove(key: string) {
     await deleteItemAsync(key)
 }
+
+export const SecureStore = {
+    save,
+    get: getValue,
+    remove
+}

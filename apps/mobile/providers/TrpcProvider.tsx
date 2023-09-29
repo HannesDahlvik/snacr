@@ -1,7 +1,7 @@
 import { PropsWithChildren, useState } from 'react'
 
 import { api } from '../lib/api'
-import { store } from '../stores'
+import { SecureStore } from '../lib/store'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { httpBatchLink, loggerLink } from '@trpc/client'
 import Constants from 'expo-constants'
@@ -30,8 +30,8 @@ export default function TrpcProvider({ children }: PropsWithChildren) {
                 }),
                 httpBatchLink({
                     url: `${getBaseUrl()}/api/trpc`,
-                    headers() {
-                        const sessionId = store.auth.sessionId.get()
+                    async headers() {
+                        const sessionId = await SecureStore.get('sessionId')
                         return {
                             Authorization: `Bearer ${sessionId}`,
                             device: 'mobile'
