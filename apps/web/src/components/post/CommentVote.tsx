@@ -3,12 +3,12 @@
 import { useRouter } from 'next/navigation'
 
 import { Comment, VoteType } from '@snacr/db'
+import { cn } from '@snacr/ui-utils'
+import { useToast } from '@snacr/ui-web'
 
 import { ArrowFatDown, ArrowFatUp } from '@phosphor-icons/react'
 import { z } from 'zod'
-import { useToast } from '~/hooks/useToast'
 import { api } from '~/lib/api'
-import { cn } from '~/lib/utils'
 
 const commentVoteSchema = z.object({
     commentId: z.string(),

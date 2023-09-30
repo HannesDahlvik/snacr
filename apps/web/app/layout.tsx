@@ -4,12 +4,11 @@ import type { Metadata } from 'next'
 import { Lato } from 'next/font/google'
 
 import { getServerSession } from '@snacr/api'
+import '@snacr/ui-utils/styles'
+import { ModalsProvider, ThemeProvider, Toaster } from '@snacr/ui-web'
 
-import './globals.css'
 import { Analytics } from '@vercel/analytics/react'
-import { ThemeProvider, Toaster } from '~/components/ui'
 import AuthProvider from '~/providers/AuthProvider'
-import { ModalsProvider } from '~/providers/ModalProvider'
 import TrpcProvider from '~/providers/TrpcProvider'
 
 const lato = Lato({

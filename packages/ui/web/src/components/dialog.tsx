@@ -2,10 +2,11 @@
 
 import * as React from 'react'
 
+import { cn } from '@snacr/ui-utils'
+
 import { X } from '@phosphor-icons/react'
 import * as DialogPrimitive from '@radix-ui/react-dialog'
 import type { DialogProps } from '@radix-ui/react-dialog'
-import { cn } from '~/lib/utils'
 
 const Dialog = DialogPrimitive.Root
 

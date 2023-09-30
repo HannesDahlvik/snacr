@@ -1,0 +1,23 @@
+{
+    "name": "@snacr/ui-utils",
+    "version": "0.0.0",
+    "main": "./src/index.ts",
+    "exports": {
+        ".": "./src/index.ts",
+        "./styles": "./src/main.css",
+        "./tailwind": "./src/tailwind.config.js",
+        "./postcss": "./src/postcss.config.js"
+    },
+    "dependencies": {
+        "clsx": "^2.0.0",
+        "tailwind-merge": "^1.14.0"
+    },
+    "devDependencies": {
+        "@snacr/tsconfig": "workspace:^",
+        "@tailwindcss/typography": "^0.5.10",
+        "autoprefixer": "^10.4.14",
+        "postcss": "^8.4.27",
+        "tailwindcss": "3.3.2",
+        "tailwindcss-animate": "^1.0.6"
+    }
+}

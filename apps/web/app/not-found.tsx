@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { Button } from '~/components/ui'
+import { Button } from '@snacr/ui-web'
 
 export default function NotFoundPage() {
     return (

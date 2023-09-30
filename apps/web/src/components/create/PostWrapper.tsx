@@ -4,12 +4,21 @@ import { useState } from 'react'
 
 import { RouterOutputs } from '@snacr/api'
 import { Place } from '@snacr/db'
+import { cn } from '@snacr/ui-utils'
+import {
+    Button,
+    Command,
+    CommandEmpty,
+    CommandGroup,
+    CommandInput,
+    CommandItem,
+    Popover,
+    PopoverContent,
+    PopoverTrigger
+} from '@snacr/ui-web'
 
-import { Button, Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from '../ui'
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import CreateTextPost from './TextPost'
 import { CaretUpDown, Check, Icon, ImageSquare, Link, Note } from '@phosphor-icons/react'
-import { cn } from '~/lib/utils'
 
 const tabs: TabButtonProps[] = [
     {

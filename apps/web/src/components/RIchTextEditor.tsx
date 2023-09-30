@@ -2,10 +2,8 @@
 
 import { useState } from 'react'
 
-import { Button } from './button'
-import { Input } from './input'
-import { Popover, PopoverContent, PopoverTrigger } from './popover'
-import { Separator } from './separator'
+import { Button, Input, Popover, PopoverContent, PopoverTrigger, Separator } from '@snacr/ui-web'
+
 import {
     Code,
     CodeBlock,
@@ -24,7 +22,7 @@ interface Props {
     editor: Editor | null
 }
 
-export default function RichTextEditor({ editor }: Props) {
+export function RichTextEditor({ editor }: Props) {
     const [link, setLink] = useState('')
 
     const handleAddLink = () => {

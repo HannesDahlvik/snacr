@@ -2,9 +2,9 @@
 
 import { useRouter } from 'next/navigation'
 
-import { Button, Input } from '../ui'
+import { Button, Input, useToast } from '@snacr/ui-web'
+
 import { z } from 'zod'
-import { useToast } from '~/hooks/useToast'
 import { useZodForm } from '~/hooks/useZodForm'
 import { api } from '~/lib/api'
 

@@ -4,7 +4,6 @@ import { Fragment } from 'react'
 
 import Link from 'next/link'
 
-import packageJSON from '../../package.json'
 import {
     Avatar,
     Button,
@@ -15,7 +14,9 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
     Input
-} from './ui'
+} from '@snacr/ui-web'
+
+import packageJSON from '../../package.json'
 import {
     CaretDown,
     Gear,

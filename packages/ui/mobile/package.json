@@ -1,0 +1,8 @@
+{
+    "name": "@snacr/ui-mobile",
+    "version": "0.0.0",
+    "main": "src/index.ts",
+    "devDependencies": {
+        "@snacr/tsconfig": "workspace:^"
+    }
+}

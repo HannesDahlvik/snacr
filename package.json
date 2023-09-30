@@ -5,7 +5,8 @@
     "workspaces": [
         "apps/*",
         "packages/*",
-        "packages/config/*"
+        "packages/config/*",
+        "packages/ui/*"
     ],
     "scripts": {
         "web": "pnpm --filter @snacr/web --",

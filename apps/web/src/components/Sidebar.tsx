@@ -6,12 +6,11 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 import { RouterOutputs } from '@snacr/api'
+import { cn } from '@snacr/ui-utils'
+import { Button, useModals } from '@snacr/ui-web'
 
 import CreatePlaceModal from './modals/CreatePlace'
-import { Button } from './ui'
 import { House, Icon } from '@phosphor-icons/react'
-import { useModals } from '~/hooks/useModals'
-import { cn } from '~/lib/utils'
 import { useAuth } from '~/providers/AuthProvider'
 
 interface Props {
