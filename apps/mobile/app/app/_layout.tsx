@@ -1,4 +1,4 @@
-import { useAuth } from '../../providers/AuthProvider'
+import { useAuth } from '../../src/providers/AuthProvider'
 import { Redirect, Tabs } from 'expo-router'
 import { Gear, Globe, House, PlusCircle, UserCircle } from 'phosphor-react-native'
 

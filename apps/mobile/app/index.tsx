@@ -1,6 +1,6 @@
 import { Button, Text, View } from 'react-native'
 
-import { useAuth } from '../providers/AuthProvider'
+import { useAuth } from '../src/providers/AuthProvider'
 import { Redirect, useRouter } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
 

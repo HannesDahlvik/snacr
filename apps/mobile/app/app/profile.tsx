@@ -1,6 +1,6 @@
 import { Button, Text } from 'react-native'
 
-import { useAuth } from '../../providers/AuthProvider'
+import { useAuth } from '../../src/providers/AuthProvider'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
 export default function AppProfilePage() {

@@ -1,8 +1,8 @@
 import { Text, View, TextInput, Button } from 'react-native'
 
-import { useZodForm } from '../../hooks/useZodForm'
-import { api } from '../../lib/api'
-import { useAuth } from '../../providers/AuthProvider'
+import { useZodForm } from '../../src/hooks/useZodForm'
+import { api } from '../../src/lib/api'
+import { useAuth } from '../../src/providers/AuthProvider'
 import { Controller } from 'react-hook-form'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { z } from 'zod'
