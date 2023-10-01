@@ -1,7 +1,8 @@
 'use client'
 
-import { PropsWithChildren, useState } from 'react'
-import { createContext } from 'react'
+import { createContext, PropsWithChildren, useState } from 'react'
+
+import { genRandomString } from '@snacr/ui-utils'
 
 import {
     Dialog,
@@ -10,8 +11,7 @@ import {
     DialogHeader,
     DialogTitle,
     type DialogProps
-} from '../components/ui'
-import { genRandomString } from '~/lib/utils'
+} from '../components/dialog'
 
 export type ModalSettings = Partial<DialogProps> &
     Partial<{

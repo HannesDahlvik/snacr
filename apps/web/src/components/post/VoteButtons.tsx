@@ -6,12 +6,12 @@ import { useRouter } from 'next/navigation'
 
 import { RouterOutputs } from '@snacr/api'
 import { VoteType } from '@snacr/db'
+import { cn } from '@snacr/ui-utils'
+import { useToast } from '@snacr/ui-web'
 
 import { ArrowFatDown, ArrowFatUp } from '@phosphor-icons/react'
 import { z } from 'zod'
-import { useToast } from '~/hooks/useToast'
 import { api } from '~/lib/api'
-import { cn } from '~/lib/utils'
 import { useAuth } from '~/providers/AuthProvider'
 
 const postVoteSchema = z.object({

@@ -2,10 +2,11 @@ import { Fragment } from 'react'
 
 import Link from 'next/link'
 
+import { Separator } from '@snacr/ui-web'
+
 import parse from 'html-react-parser'
 import PostPageCommentsSidebar from '~/components/post/CommentsSidebar'
 import PostVoteButtons from '~/components/post/VoteButtons'
-import { Separator } from '~/components/ui'
 import { caller } from '~/lib/caller'
 import { PlacePostParamsProps } from '~/types'
 

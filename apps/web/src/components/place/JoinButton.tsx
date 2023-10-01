@@ -6,9 +6,8 @@ import { useRouter } from 'next/navigation'
 
 import { RouterOutputs } from '@snacr/api'
 import { Place } from '@snacr/db'
+import { Button, useToast } from '@snacr/ui-web'
 
-import { Button } from '../ui'
-import { useToast } from '~/hooks/useToast'
 import { api } from '~/lib/api'
 
 interface Props {

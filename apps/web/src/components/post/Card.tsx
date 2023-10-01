@@ -1,8 +1,8 @@
 import Link from 'next/link'
 
 import { Place, Post, User, Vote } from '@snacr/db'
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@snacr/ui-web'
 
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '../ui'
 import PostVoteButtons from './VoteButtons'
 import parse from 'html-react-parser'
 import { timeAgo } from '~/lib/utils'

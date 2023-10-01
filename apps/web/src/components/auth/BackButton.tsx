@@ -2,7 +2,8 @@
 
 import Link from 'next/link'
 
-import { Button } from '../ui'
+import { Button } from '@snacr/ui-web'
+
 import { House } from '@phosphor-icons/react'
 
 export default function AuthBackButton() {

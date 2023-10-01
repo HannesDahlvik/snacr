@@ -1,6 +1,6 @@
 import '../global.css'
-import AuthProvider from '../providers/AuthProvider'
-import TrpcProvider from '../providers/TrpcProvider'
+import AuthProvider from '../src/providers/AuthProvider'
+import TrpcProvider from '../src/providers/TrpcProvider'
 import { Slot, SplashScreen } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import { SafeAreaProvider } from 'react-native-safe-area-context'

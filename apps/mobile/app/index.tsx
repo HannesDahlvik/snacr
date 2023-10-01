@@ -1,8 +1,7 @@
-import { Button, Text, View } from 'react-native'
-
-import { useAuth } from '../providers/AuthProvider'
+import { useAuth } from '../src/providers/AuthProvider'
 import { Redirect, useRouter } from 'expo-router'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { Button, Text, View } from 'react-native-ui-lib'
 
 export default function IndexPage() {
     const router = useRouter()
@@ -20,15 +19,15 @@ export default function IndexPage() {
 
             <View className="w-1/2">
                 <View className="mb-2">
-                    <Button title="Login" onPress={() => router.push('/auth/login')} />
+                    <Button label="Login" onPress={() => router.push('/auth/login')} />
                 </View>
 
                 <View className="mb-2">
-                    <Button title="Signup" onPress={() => router.push('/auth/signup')} />
+                    <Button label="Signup" onPress={() => router.push('/auth/signup')} />
                 </View>
 
                 <View className="mb-2">
-                    <Button title="App page" onPress={() => router.push('/app')} />
+                    <Button label="App page" onPress={() => router.push('/app')} />
                 </View>
             </View>
         </SafeAreaView>

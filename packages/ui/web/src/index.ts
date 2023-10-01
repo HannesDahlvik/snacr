@@ -1,6 +1,13 @@
-export { Avatar, AvatarFallback, AvatarImage } from './avatar'
-export { Button, type ButtonProps } from './button'
-export { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './card'
+export { Avatar, AvatarFallback, AvatarImage } from './components/avatar'
+export { Button, type ButtonProps } from './components/button'
+export {
+    Card,
+    CardContent,
+    CardDescription,
+    CardFooter,
+    CardHeader,
+    CardTitle
+} from './components/card'
 export {
     Command,
     CommandDialog,
@@ -11,7 +18,7 @@ export {
     CommandList,
     CommandSeparator,
     CommandShortcut
-} from './command'
+} from './components/command'
 export {
     Dialog,
     DialogContent,
@@ -21,7 +28,7 @@ export {
     DialogTitle,
     DialogTrigger,
     type DialogProps
-} from './dialog'
+} from './components/dialog'
 export {
     DropdownMenu,
     DropdownMenuCheckboxItem,
@@ -38,10 +45,10 @@ export {
     DropdownMenuSubContent,
     DropdownMenuSubTrigger,
     DropdownMenuTrigger
-} from './dropdown-menu'
-export { Input, type InputProps } from './input'
-export { Label } from './label'
-export { Popover, PopoverContent, PopoverTrigger } from './popover'
+} from './components/dropdown-menu'
+export { Input, type InputProps } from './components/input'
+export { Label } from './components/label'
+export { Popover, PopoverContent, PopoverTrigger } from './components/popover'
 export {
     Select,
     SelectContent,
@@ -51,10 +58,10 @@ export {
     SelectSeparator,
     SelectTrigger,
     SelectValue
-} from './select'
-export { Separator } from './separator'
-export { Textarea } from './textarea'
-export { ThemeProvider } from './theme-provider'
+} from './components/select'
+export { Separator } from './components/separator'
+export { Textarea } from './components/textarea'
+export { ThemeProvider } from './components/theme-provider'
 export {
     Toast,
     ToastAction,
@@ -65,5 +72,10 @@ export {
     ToastProvider,
     ToastTitle,
     ToastViewport
-} from './toast'
-export { Toaster } from './toaster'
+} from './components/toast'
+export { Toaster } from './components/toaster'
+
+export { useModals } from './hooks/useModals'
+export { toast, useToast } from './hooks/useToast'
+
+export { ModalsProvider } from './providers/ModalProvider'

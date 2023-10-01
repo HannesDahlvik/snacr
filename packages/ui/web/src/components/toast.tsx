@@ -2,10 +2,11 @@
 
 import * as React from 'react'
 
+import { cn } from '@snacr/ui-utils'
+
 import { X } from '@phosphor-icons/react'
 import * as ToastPrimitives from '@radix-ui/react-toast'
 import { cva, type VariantProps } from 'class-variance-authority'
-import { cn } from '~/lib/utils'
 
 const ToastProvider = ToastPrimitives.Provider
 

@@ -1,7 +1,6 @@
-import { Button, Text } from 'react-native'
-
-import { useAuth } from '../../providers/AuthProvider'
+import { useAuth } from '../../src/providers/AuthProvider'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { Button, Text } from 'react-native-ui-lib'
 
 export default function AppProfilePage() {
     const { logout } = useAuth()
@@ -10,7 +9,7 @@ export default function AppProfilePage() {
         <SafeAreaView className="flex-1 flex-col items-center justify-center gap-3">
             <Text className="mb-2">AppProfilePage</Text>
 
-            <Button title="Logout" onPress={logout} />
+            <Button label="Logout" onPress={logout} />
         </SafeAreaView>
     )
 }

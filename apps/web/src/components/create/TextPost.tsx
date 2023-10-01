@@ -3,9 +3,9 @@
 import { useRouter } from 'next/navigation'
 
 import { Place } from '@snacr/db'
+import { Button, Input, Label, useToast } from '@snacr/ui-web'
 
-import { Button, Input, Label } from '../ui'
-import RichTextEditor from '../ui/rich-text-editor'
+import { RichTextEditor } from '../RIchTextEditor'
 import Blockquote from '@tiptap/extension-blockquote'
 import Bold from '@tiptap/extension-bold'
 import BulletList from '@tiptap/extension-bullet-list'
@@ -22,7 +22,6 @@ import Strikethrough from '@tiptap/extension-strike'
 import Text from '@tiptap/extension-text'
 import { useEditor } from '@tiptap/react'
 import { z } from 'zod'
-import { useToast } from '~/hooks/useToast'
 import { useZodForm } from '~/hooks/useZodForm'
 import { api } from '~/lib/api'
 

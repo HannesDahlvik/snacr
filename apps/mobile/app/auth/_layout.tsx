@@ -1,6 +1,6 @@
 import { Pressable, StatusBar } from 'react-native'
 
-import { useAuth } from '../../providers/AuthProvider'
+import { useAuth } from '../../src/providers/AuthProvider'
 import { Link, Redirect, Slot } from 'expo-router'
 import { ArrowLeft } from 'phosphor-react-native'
 

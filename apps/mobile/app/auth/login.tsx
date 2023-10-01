@@ -1,10 +1,9 @@
-import { Text, View, TextInput, Button } from 'react-native'
-
-import { useZodForm } from '../../hooks/useZodForm'
-import { api } from '../../lib/api'
-import { useAuth } from '../../providers/AuthProvider'
+import { useZodForm } from '../../src/hooks/useZodForm'
+import { api } from '../../src/lib/api'
+import { useAuth } from '../../src/providers/AuthProvider'
 import { Controller } from 'react-hook-form'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { Button, Text, TextField, View } from 'react-native-ui-lib'
 import { z } from 'zod'
 
 const loginSchema = z.object({
@@ -49,20 +48,18 @@ export default function LoginPage() {
         <SafeAreaView className="flex-1 flex-col justify-center items-center">
             <Text className="mb-4 text-3xl">Login</Text>
 
-            <View className="flex flex-col">
+            <View>
                 <Controller
                     name="email"
                     control={control}
                     rules={{
                         required: true
                     }}
-                    render={({ field: { onChange, onBlur, value } }) => (
-                        <TextInput
-                            className="border rounded mb-2 px-2"
-                            placeholder="name@email.com"
-                            onBlur={onBlur}
+                    render={({ field: { onChange } }) => (
+                        <TextField
+                            placeholder="Email"
+                            floatingPlaceholder
                             onChangeText={onChange}
-                            value={value}
                         />
                     )}
                 />
@@ -73,18 +70,17 @@ export default function LoginPage() {
                     rules={{
                         required: true
                     }}
-                    render={({ field: { onChange, onBlur, value } }) => (
-                        <TextInput
-                            className="border rounded mb-2 px-2"
-                            placeholder="******"
-                            onBlur={onBlur}
+                    render={({ field: { onChange } }) => (
+                        <TextField
+                            placeholder="Password"
+                            floatingPlaceholder
+                            secureTextEntry
                             onChangeText={onChange}
-                            value={value}
                         />
                     )}
                 />
 
-                <Button title="Login" onPress={handleSubmit(handleLogin)} />
+                <Button className="mt-3" label="Login" onPress={handleSubmit(handleLogin)} />
             </View>
         </SafeAreaView>
     )

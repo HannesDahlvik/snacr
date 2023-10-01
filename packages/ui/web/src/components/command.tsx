@@ -2,11 +2,12 @@
 
 import * as React from 'react'
 
+import { cn } from '@snacr/ui-utils'
+
+import { Dialog, DialogContent } from '../components/dialog'
 import { MagnifyingGlass } from '@phosphor-icons/react'
 import { DialogProps } from '@radix-ui/react-dialog'
 import { Command as CommandPrimitive } from 'cmdk'
-import { Dialog, DialogContent } from '~/components/ui/dialog'
-import { cn } from '~/lib/utils'
 
 const Command = React.forwardRef<
     React.ElementRef<typeof CommandPrimitive>,

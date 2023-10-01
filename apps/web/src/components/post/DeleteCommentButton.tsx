@@ -3,10 +3,15 @@
 import { useRouter } from 'next/navigation'
 
 import { Comment } from '@snacr/db'
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+    useToast
+} from '@snacr/ui-web'
 
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '../ui'
 import { DotsThree, TrashSimple } from '@phosphor-icons/react'
-import { useToast } from '~/hooks/useToast'
 import { api } from '~/lib/api'
 
 interface Props {

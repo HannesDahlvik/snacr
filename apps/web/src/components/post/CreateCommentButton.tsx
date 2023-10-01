@@ -1,8 +1,8 @@
 'use client'
 
+import { Button, useModals } from '@snacr/ui-web'
+
 import CreateCommentModal from '../modals/CreateComment'
-import { Button } from '../ui'
-import { useModals } from '~/hooks/useModals'
 
 interface Props {
     postId: string

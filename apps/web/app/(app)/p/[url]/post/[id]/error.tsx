@@ -4,7 +4,8 @@ import { useEffect } from 'react'
 
 import Link from 'next/link'
 
-import { Button } from '~/components/ui'
+import { Button } from '@snacr/ui-web'
+
 import { ErrorPage } from '~/types'
 
 export default function PlacePostErrorPage({ error }: ErrorPage) {

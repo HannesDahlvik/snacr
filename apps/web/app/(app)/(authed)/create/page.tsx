@@ -1,7 +1,8 @@
 import { Fragment } from 'react'
 
+import { Separator } from '@snacr/ui-web'
+
 import CreatePostWrapper from '~/components/create/PostWrapper'
-import { Separator } from '~/components/ui'
 import { caller } from '~/lib/caller'
 
 export default async function AuthedCreatePage() {
