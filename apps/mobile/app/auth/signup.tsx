@@ -1,10 +1,9 @@
-import { Text, View, TextInput, Button } from 'react-native'
-
 import { useZodForm } from '../../src/hooks/useZodForm'
 import { api } from '../../src/lib/api'
 import { useAuth } from '../../src/providers/AuthProvider'
 import { Controller } from 'react-hook-form'
 import { SafeAreaView } from 'react-native-safe-area-context'
+import { Button, Text, TextField, View } from 'react-native-ui-lib'
 import { z } from 'zod'
 
 const signupSchema = z.object({
@@ -59,13 +58,11 @@ export default function SignupPage() {
                     rules={{
                         required: true
                     }}
-                    render={({ field: { onChange, onBlur, value } }) => (
-                        <TextInput
-                            className="border rounded mb-2 px-2"
-                            placeholder="Jon Doe"
-                            onBlur={onBlur}
+                    render={({ field: { onChange } }) => (
+                        <TextField
+                            placeholder="Username"
+                            floatingPlaceholder
                             onChangeText={onChange}
-                            value={value}
                         />
                     )}
                 />
@@ -76,13 +73,11 @@ export default function SignupPage() {
                     rules={{
                         required: true
                     }}
-                    render={({ field: { onChange, onBlur, value } }) => (
-                        <TextInput
-                            className="border rounded mb-2 px-2"
-                            placeholder="name@email.com"
-                            onBlur={onBlur}
+                    render={({ field: { onChange } }) => (
+                        <TextField
+                            placeholder="Email"
+                            floatingPlaceholder
                             onChangeText={onChange}
-                            value={value}
                         />
                     )}
                 />
@@ -93,18 +88,17 @@ export default function SignupPage() {
                     rules={{
                         required: true
                     }}
-                    render={({ field: { onChange, onBlur, value } }) => (
-                        <TextInput
-                            className="border rounded mb-2 px-2"
-                            placeholder="******"
-                            onBlur={onBlur}
+                    render={({ field: { onChange } }) => (
+                        <TextField
+                            placeholder="Password"
+                            floatingPlaceholder
+                            secureTextEntry
                             onChangeText={onChange}
-                            value={value}
                         />
                     )}
                 />
 
-                <Button title="Signup" onPress={handleSubmit(handleSignup)} />
+                <Button className="mt-3" label="Signup" onPress={handleSubmit(handleSignup)} />
             </View>
         </SafeAreaView>
     )
