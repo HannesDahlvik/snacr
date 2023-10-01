@@ -1,6 +1,6 @@
-import { useAuth } from '../../src/providers/AuthProvider'
 import { Redirect, Tabs } from 'expo-router'
 import { Gear, Globe, House, PlusCircle, UserCircle } from 'phosphor-react-native'
+import { useAuth } from '~/providers/AuthProvider'
 
 export default function AppLayout() {
     const { user } = useAuth()
@@ -64,6 +64,13 @@ export default function AppLayout() {
                     tabBarIcon(props) {
                         return <UserCircle weight={props.focused ? 'fill' : 'regular'} />
                     }
+                }}
+            />
+
+            <Tabs.Screen
+                name="place"
+                options={{
+                    href: null
                 }}
             />
         </Tabs>

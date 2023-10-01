@@ -28,7 +28,7 @@ export default function PostCard({ post }: Props) {
             className="border shadow-sm mb-3 p-3"
         >
             <View className="flex flex-row items-center gap-2">
-                <Link href={`/p/${post.place.url}`} className="text-sm hover:underline">
+                <Link href={`/app/place/${post.place.url}`} className="text-sm hover:underline">
                     p/{post.place.url}
                 </Link>
                 <Text>-</Text>
@@ -37,7 +37,7 @@ export default function PostCard({ post }: Props) {
                 </Text>
             </View>
 
-            <Link href={`/p/${post.place.url}/post/${post.id}`}>
+            <Link href={`/app/place/${post.place.url}/post/${post.id}`}>
                 <Text className="text-2xl font-bold">{post.title}</Text>
             </Link>
 

@@ -53,9 +53,6 @@ importers:
       '@trpc/server':
         specifier: ^10.35.0
         version: 10.35.0
-      advanced-html-parser:
-        specifier: ^1.1.0
-        version: 1.1.0
       expo:
         specifier: ~49.0.13
         version: 49.0.13(@babel/core@7.22.9)
@@ -92,9 +89,6 @@ importers:
       react-native-gesture-handler:
         specifier: ~2.12.0
         version: 2.12.0(react-native@0.72.5)(react@18.2.0)
-      react-native-html-parser:
-        specifier: ^0.1.0
-        version: 0.1.0
       react-native-reanimated:
         specifier: ~3.3.0
         version: 3.3.0(@babel/core@7.22.9)(@babel/plugin-proposal-nullish-coalescing-operator@7.18.6)(@babel/plugin-proposal-optional-chaining@7.21.0)(@babel/plugin-transform-arrow-functions@7.22.5)(@babel/plugin-transform-shorthand-properties@7.22.5)(@babel/plugin-transform-template-literals@7.22.5)(react-native@0.72.5)(react@18.2.0)
@@ -110,9 +104,6 @@ importers:
       react-native-ui-lib:
         specifier: ^7.8.0
         version: 7.8.0(react-native-gesture-handler@2.12.0)(react-native-reanimated@3.3.0)(react-native@0.72.5)(react@18.2.0)
-      react-refresh:
-        specifier: ^0.14.0
-        version: 0.14.0
       superjson:
         specifier: ^1.13.1
         version: 1.13.1
@@ -4847,13 +4838,6 @@ packages:
     engines: {node: '>=0.4.0'}
     hasBin: true
 
-  /advanced-html-parser@1.1.0:
-    resolution: {integrity: sha512-cduzDXiqiYotxyv/9QzSmkegtrl4WtjxDuncAUOtbI8eFfnBDxPdOg8iY2H7GsHLR2SbqUdRMOJra0k5kmU0LQ==}
-    dependencies:
-      css-select: 4.3.0
-      he: 1.2.0
-    dev: false
-
   /agent-base@6.0.2:
     resolution: {integrity: sha512-RZNwNclF7+MS/8bDg70amg32dyeZGZxiDuQmZxKLAlQjr3jGyLx+4Kkk58UO7D2QdgFIQCovuSuZESne6RG6XQ==}
     engines: {node: '>= 6.0.0'}
@@ -5871,16 +5855,6 @@ packages:
   /css-color-keywords@1.0.0:
     resolution: {integrity: sha512-FyyrDHZKEjXDpNJYvVsV960FiqQyXc/LlYmsxl2BcdMb2WPx0OGRVgTg55rPSyLSNMqP52R9r8geSp7apN3Ofg==}
     engines: {node: '>=4'}
-    dev: false
-
-  /css-select@4.3.0:
-    resolution: {integrity: sha512-wPpOYtnsVontu2mODhA19JrqWxNsfdatRKd64kmpRbQgh1KtItko5sTnEpPdpSaJszTOhEMlF/RPz28qj4HqhQ==}
-    dependencies:
-      boolbase: 1.0.0
-      css-what: 6.1.0
-      domhandler: 4.3.1
-      domutils: 2.8.0
-      nth-check: 2.1.1
     dev: false
 
   /css-select@5.1.0:
@@ -7523,11 +7497,6 @@ packages:
     engines: {node: '>= 0.4.0'}
     dependencies:
       function-bind: 1.1.1
-
-  /he@1.2.0:
-    resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
-    hasBin: true
-    dev: false
 
   /hermes-estree@0.12.0:
     resolution: {integrity: sha512-+e8xR6SCen0wyAKrMT3UD0ZCCLymKhRgjEB5sS28rKiFir/fXgLoeRilRUssFCILmGHb+OvHDUlhxs0+IEyvQw==}
@@ -10104,11 +10073,6 @@ packages:
       react-native: 0.72.5(@babel/core@7.22.9)(@babel/preset-env@7.22.9)(react@18.2.0)
     dev: false
 
-  /react-native-html-parser@0.1.0:
-    resolution: {integrity: sha512-G5d0pk7TA9YgjVJhLRf2zMOOf1HXd8ItM9JYsTS2pXoEfSRfMfRU5iTj03LGwvHU2NT9kc18NDJeLgZY6+Bbvg==}
-    engines: {node: '>=0.1'}
-    dev: false
-
   /react-native-reanimated@3.3.0(@babel/core@7.22.9)(@babel/plugin-proposal-nullish-coalescing-operator@7.18.6)(@babel/plugin-proposal-optional-chaining@7.21.0)(@babel/plugin-transform-arrow-functions@7.22.5)(@babel/plugin-transform-shorthand-properties@7.22.5)(@babel/plugin-transform-template-literals@7.22.5)(react-native@0.72.5)(react@18.2.0):
     resolution: {integrity: sha512-LzfpPZ1qXBGy5BcUHqw3pBC0qSd22qXS3t8hWSbozXNrBkzMhhOrcILE/nEg/PHpNNp1xvGOW8NwpAMF006roQ==}
     peerDependencies:
@@ -10292,11 +10256,6 @@ packages:
 
   /react-property@2.0.0:
     resolution: {integrity: sha512-kzmNjIgU32mO4mmH5+iUyrqlpFQhF8K2k7eZ4fdLSOPFrD1XgEuSBv9LDEgxRXTMBqMd8ppT0x6TIzqE5pdGdw==}
-    dev: false
-
-  /react-refresh@0.14.0:
-    resolution: {integrity: sha512-wViHqhAd8OHeLS/IRMJjTSDHF3U9eWi62F/MledQGPdJGDhodXJ9PBLNGr6WWL7qlH12Mt3TyTpbS+hGXMjCzQ==}
-    engines: {node: '>=0.10.0'}
     dev: false
 
   /react-refresh@0.4.3:
