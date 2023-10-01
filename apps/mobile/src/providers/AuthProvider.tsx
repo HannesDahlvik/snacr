@@ -8,14 +8,13 @@ import {
     useState
 } from 'react'
 
-import { Text } from 'react-native'
+import { User } from '@snacr/api'
 
-import { User } from '@snacr/db'
-
+import ErrorPage from '../components/ErrorPage'
+import LoadingPage from '../components/LoadingPage'
 import { api } from '../lib/api'
 import { SecureStore } from '../lib/store'
 import { SplashScreen, router } from 'expo-router'
-import { SafeAreaView } from 'react-native-safe-area-context'
 
 interface AuthContextType {
     sessionId: string | null
@@ -54,19 +53,9 @@ export default function AuthProvider({ children }: PropsWithChildren) {
         })
     }, [])
 
-    if (authVerify.isError)
-        return (
-            <SafeAreaView className="flex flex-1 justify-center items-center">
-                <Text>Error: {authVerify.error.message}</Text>
-            </SafeAreaView>
-        )
+    if (authVerify.isError) return <ErrorPage message={authVerify.error.message} />
 
-    if (authVerify.isLoading)
-        return (
-            <SafeAreaView className="flex flex-1 justify-center items-center">
-                <Text>Loading</Text>
-            </SafeAreaView>
-        )
+    if (authVerify.isLoading) return <LoadingPage />
 
     return (
         <AuthContext.Provider
